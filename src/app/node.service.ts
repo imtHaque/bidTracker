@@ -24,7 +24,7 @@ export class NodeService {
     {username: 'approver', password: '123', position: 'approver'}
         ];
 
-        url = 'http://localhost:3000';
+        url = '';
 
 
 getAllTask() {
