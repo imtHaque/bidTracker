@@ -1,0 +1,516 @@
+@font-face {
+  src: url('../../../assets/stagFont/stagFont/Stag Sans LCG-Light.otf');
+  font-family: 'stagSansLight';
+}
+
+.fontCont {
+  font-family: 'stagSansLight';
+  padding: 10px;
+}
+label{
+  color: rgb(0, 0, 0);
+}
+input.transparent-input{
+  color: rgb(10, 10, 10);
+  background-color:transparent !important;
+  border: 0 !important;
+}
+
+.modal-content {
+  padding: 5px;
+}
+
+textarea.transparent-input{
+  color: rgb(7, 7, 7);
+  background-color:transparent !important;
+  border: 0 !important;
+}
+.btn-primary-outline {
+  background-color: transparent;
+  border-color: rgba(12, 95, 172, 0.74);
+  color: rgb(5, 5, 5);
+  margin: 3px;
+}
+
+.save_button {
+  max-width: 30px;
+  height: auto;
+  width: auto;
+}
+.next_button {
+  max-width: 35px;
+  height: auto;
+  width: auto;
+}
+.accept_button {
+  height: 40px;
+  width: 40px;
+}
+
+
+.navToPreBidBtn {
+  max-height: 35px;
+  max-width: 35px;
+}
+.userSelection {
+  background-color: transparent;
+  border-color: rgba(22, 109, 144, 0.603);
+}
+
+.deleteUserSelection {
+  max-width: 20px;
+  height: auto;
+  width: auto;
+  opacity: 0.8;
+  cursor: pointer;
+  align-content: left;
+}
+
+
+ul {
+  list-style-type: none;
+}
+::placeholder {
+  color: rgba(72, 73, 75, 0.973);
+  font-style: italic;
+}
+
+:host ::ng-deep .tabselection a.nav-link {
+  display: none;
+}
+* {
+  padding: 0;
+}
+
+@media screen and (max-width: 480px) {
+
+  .container1 {
+    display: none;
+  }
+
+  :host ::ng-deep .tabselection a.nav-link {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+}
+
+.container1 {
+  margin-top: 20px;
+  flex-direction: column;
+  width: 100%;
+  min-width: 480px;
+  padding: 0 40px;
+  margin-bottom: 20px;
+}
+.breadcrumb {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: auto;
+  text-align: center;
+  height: 57px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 1), 0 4px 14px rgba(0, 0, 0, 0.7);
+  background-color: #ddd;
+  font-size: 14px;
+}
+.breadcrumb a {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  text-decoration: none;
+  margin: auto;
+  height: 100%;
+  padding-left: 38px;
+  padding-right: 0;
+  color: #666;
+}
+.breadcrumb a:first-child {
+  padding-left: 15.2px;
+}
+.breadcrumb a:last-child {
+  padding-right: 15.2px;
+}
+.breadcrumb a:after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 57px;
+  height: 57px;
+  top: 0;
+  right: -28.1481481481px;
+  background-color: #ddd;
+  border-top-right-radius: 5px;
+  transform: scale(0.707) rotate(45deg);
+  box-shadow: 1px -1px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+.breadcrumb a:last-child:after {
+  content: none;
+}
+.breadcrumb__inner {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  z-index: 2;
+}
+.breadcrumb__title {
+  font-weight: bold;
+}
+
+.breadcrumb a.active, .breadcrumb a:hover {
+  background: #0066A1;
+  color: white;
+}
+.breadcrumb a.active:after, .breadcrumb a:hover:after {
+  background: #0066A1;
+  color: white;
+}
+
+.breadcrumb-active {
+  background: #0066A1;
+  color: white;
+}
+.breadcrumb-active:after{
+  background: #0066A1;
+  color: white;
+}
+
+
+#probability > li {
+  color: rgb(10, 10, 10);
+  display: inline-block;
+}
+#probability:hover {
+  cursor: pointer;
+  background-color: rgba(193, 199, 227, 0.116)
+}
+#probability > div >li.btn {
+  color: rgb(8, 8, 8);
+}
+#probability > div >li.btn:hover {
+  background-color: rgba(193, 199, 227, 0.329);
+}
+#estimatedValue {
+  color: rgb(7, 7, 7);
+  display: inline-block;
+}
+#estimatedValue:hover {
+  cursor: pointer;
+  background-color: rgba(193, 199, 227, 0.116)
+}
+#estVList {
+  cursor: pointer;
+  color: rgb(10, 10, 10);
+}
+#estVList:hover {
+  background-color: rgba(193, 199, 227, 0.329);
+}
+
+.flex-row{
+  background: rgba(0, 0, 0, 0.411);
+}
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 6px;
+  box-sizing: border-box;
+  border: 26px solid rgb(73, 71, 71);
+  border-color: rgb(73, 71, 71) transparent rgb(73, 71, 71) transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
+.fit2center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.overview {
+  color: rgb(7, 7, 7);
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.bidname {
+  font-size: 40px;
+  color: rgb(10, 10, 10);
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+
+.p-2 {
+  padding: 0 !important;
+}
+
+.taskBtn {
+  width: 40%;
+  margin-bottom: 30px;
+}
+
+.taskSaveBtn {
+  background: #0066a1 ;
+  border: 0px;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.taskSaveBtn:hover {
+  background: white;
+  color: #0066a1 ;
+  border: 2px solid #0066a1 ;
+}
+
+.taskCancelBtn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: #898D8D;
+  border: 0px;
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.taskCancelBtn:hover {
+  background: white;
+  color: #898D8D;
+  border: 2px solid #898D8D;
+}
+
+.taskList {
+  max-width: 400px;
+  margin: 0 auto;
+  list-style-type: none;
+  counter-reset: steps;
+  margin: 0;
+  padding-inline-start: 12px;
+}
+.taskList li {
+  padding: 0 0 20px 50px;
+  position: relative;
+  margin: 0;
+}
+.taskList li:after {
+  position: absolute;
+  top: 20px;
+  left: 6px;
+  content: "";
+  counter-increment: steps;
+  border: 0px;
+  border-radius: 50%;
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  text-align: center;
+  line-height: 24px;
+  background: rgba(8, 8, 8, 0.979);
+}
+
+.taskList li:before {
+  position: absolute;
+  left: 11px;
+  top: 22px;
+  content: "";
+  height: 100%;
+  width: 0;
+  border-left: 2px solid rgb(56, 54, 54);
+}
+
+.nextactions div:last-child .taskList li:before {
+  border: none;
+}
+
+.taskSubject {
+  color: rgb(2, 43, 177);
+
+}
+.taskComment {
+  color: rgb(7, 7, 7);
+}
+
+.taskDueDate {
+  color: rgb(199, 8, 8);
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.addTaskBtn {
+  max-width: 70px;
+  background: #0066A1;
+  border: 0px;
+  color: rgb(255, 255, 255);
+  margin-bottom: 10px;
+  border-radius: 5px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.addTaskBtn:hover {
+  background: white;
+  color: #0066A1;
+  border: 1px solid #0066A1;
+}
+
+.taskMissing {
+  margin-bottom: 10px;
+}
+
+.manager-only {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.svg-item {
+  max-width: 400px;
+  font-size: 16px;
+  margin: 0 auto;
+  animation: donutfade 1s;
+}
+
+@keyframes donutfade {
+/* this applies to the whole svg item wrapper */
+  0% {
+      opacity: .2;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+.donut-ring {
+  stroke: #EBEBEB;
+}
+
+.donut-segment {
+  transform-origin: center;
+  stroke: #FF6200;
+}
+
+.donut-segment-2 {
+  stroke: #0089C4 ;
+  animation: donut1 3s;
+}
+
+.donut-segment-3 {
+  stroke: #FA6119 ;
+  animation: donut2 3s;
+}
+
+.donut-segment-4 {
+  stroke: #00A59C;
+  animation: donut3 3s;
+}
+.donut-segment-5 {
+  stroke: #808080;
+  animation: donut3 3s;
+}
+
+.segment-1{fill:#ccc;}
+
+
+@keyframes donutfadelong {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+@keyframes donut1 {
+  0% {
+      stroke-dasharray: 0, 100;
+  }
+  100% {
+      stroke-dasharray: 30, 70;
+  }
+}
+
+@keyframes donut2 {
+  0% {
+      stroke-dasharray: 0, 100;
+  }
+  100% {
+      stroke-dasharray: 60, 40;
+  }
+}
+
+@keyframes donut3{
+  0% {
+      stroke-dasharray: 0, 100;
+  }
+  100% {
+      stroke-dasharray: 100, 0;
+  }
+}
+
+.donut-text {
+  font-family: 'stagSansLight';
+}
+.donut-text-1 {
+  fill: #0089C4 ;
+}
+.donut-text-2 {
+  fill: #FA6119;
+}
+.donut-text-3 {
+  fill: #00A59C;
+}
+
+.donut-text-4 {
+  fill: #808080;
+}
+
+.donut-stageTxt {
+  font-size: 3px;
+  line-height: 1;
+  transform: translateY(0.5em);
+  animation: donutfadelong 1.5s;
+}
+
+.scnd-container {
+  margin-bottom: 10%;
+}
+.d-flex {
+  width: 100%;
+}
+
+.btmNavBtn {
+  border: none;
+  background-color: #0066A1;
+  color: white;
+}
+
+button {
+  padding-left: 3px;
+  padding-right: 3px;
+}

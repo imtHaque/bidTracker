@@ -1,0 +1,207 @@
+<div class="fontCont">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        
+        <a class="navbar-brand">
+
+          <img class="atosNavLogo" src="../../assets/Atos.svg.png">
+
+        </a>
+
+        <img
+
+        [hidden]="isNavOpen"
+        class="order-last"
+        (click)="openNotis()"
+        src="https://image.flaticon.com/icons/svg/246/246688.svg"
+        id="notificationBell">
+
+        <span
+
+        [hidden]="((userRole === 'approver') && (approverNotificationArray.length === 0)) ||
+
+        ((userRole === 'saleslead') && (salesLeadNotificationArray.length === 0)) ||
+
+        (userRole === undefined)"
+
+        class="dot order-last">
+
+      </span>
+
+  <div [hidden]="!openNoti" class="card">
+
+    <ul 
+    *ngIf="userRole === 'saleslead'" 
+    class="list-group list-group-flush unseen-notes" >
+
+      <li 
+      *ngIf="salesLeadNotificationArray.length === 0 && clickedSleadNotifications.length === 0"
+      > No notifications yet...</li>
+
+      <li
+      [routerLink]="['/ng/getOpp', sleadNotiArr.Id]"
+      *ngFor="let sleadNotiArr of salesLeadNotificationArray; let i = index"
+      (click)="notiClick(i)"
+      class="list-group-item unclickedNotification"
+      >{{sleadNotiArr.Name}}'s stage has updated to: {{sleadNotiArr.StageName}}
+
+    </li>
+
+    </ul>
+    <ul 
+    *ngIf="userRole === 'approver'"
+    class="list-group list-group-flush unseen-notes" >
+
+      <li 
+      *ngIf="approverNotificationArray.length === 0 && clickedApprvNotifications.length === 0"
+      >No notifications yet...</li>
+
+      <li
+      [routerLink]="['/ng/getOpp', aprvNotiArr.Id]"
+      *ngFor="let aprvNotiArr of approverNotificationArray; let i = index"
+      (click)="notiClick(i)"
+      class="list-group-item unclickedNotification"
+      >{{aprvNotiArr.Name}}'s stage has updated to: {{aprvNotiArr.StageName}}</li>
+
+    </ul>
+
+    <ul 
+    *ngIf="userRole === 'saleslead'" 
+    class="list-group list-group-flush">
+
+      <li
+      *ngFor="let clickedSleadNotiArr of clickedSleadNotifications"
+      [routerLink]="['/ng/getOpp', clickedSleadNotiArr.Id]"
+      (click)="openNotis()"
+      class="list-group-item"
+      >{{clickedSleadNotiArr.Name}}'s stage has updated to: {{clickedSleadNotiArr.StageName}}</li>
+
+    </ul>
+
+    <ul 
+    *ngIf="userRole === 'approver'"
+    class="list-group list-group-flush">
+
+      <li
+      *ngFor="let clickedApprvNotiArr of clickedApprvNotifications"
+      [routerLink]="['/ng/getOpp', clickedApprvNotiArr.Id]"
+      (click)="openNotis()"
+      class="list-group-item"
+      >{{clickedApprvNotiArr.Name}}'s stage has updated to: {{clickedApprvNotiArr.StageName}}</li>
+
+    </ul>
+
+  </div>
+
+
+        <button 
+        (click)="openNavbar()" 
+        class="navbar-toggler ml-auto" 
+        type="button" 
+        data-toggle="collapse" 
+        data-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" 
+        aria-expanded="false" 
+        aria-label="Toggle navigation">
+
+          <span class="navbar-toggler-icon">
+
+          </span>
+
+        </button>
+
+        <div 
+        class="collapse navbar-collapse justify-content-center"
+        id="navbarSupportedContent">
+
+          <ul 
+          (click)="openNavbar()"
+          class="navbar-nav">
+
+            <li
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            class="nav-item">
+
+              <a 
+              class="nav-link" 
+              [routerLink]="['/ng/homePage']"
+              >Home</a>
+
+            </li>
+
+            <li
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            *ngIf="userRole === 'saleslead'"
+            class="nav-item">
+
+              <a 
+              class="nav-link" 
+              [routerLink]="['/ng/new']"
+              >Add A Bid</a>
+
+            </li>
+
+            <li
+
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            class="nav-item">
+
+              <a 
+              class="nav-link"
+              [routerLink]="['/ng/getOpp']"
+              >View Opportunities</a>
+
+            </li>
+
+            <li
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            class="nav-item">
+
+              <a 
+              class="nav-link" 
+              [routerLink]="['/ng/getAwaitingApprovalOpp']"
+              >Bids Awaiting Approval</a>
+
+            </li>
+
+            <li
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            *ngIf="userRole === 'saleslead'"
+            class="nav-item">
+
+              <a 
+              class="nav-link"
+              [routerLink]="['/ng/getSLOpp']"
+              >My Bids</a>
+
+            </li>
+
+            <li
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            class="nav-item">
+
+              <a 
+              class="nav-link" 
+              (click)="logout()"
+              >Logout</a>
+
+            </li>
+
+          </ul>
+
+        </div>
+
+      </nav>
+
+    </div>
+
+
+
+
+

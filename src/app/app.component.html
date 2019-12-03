@@ -1,0 +1,27 @@
+<div>
+
+  <igx-toast
+  #toast
+  [message]="toastMessage"
+  [position] ="toastPosition"
+  displayTime="1500">
+</igx-toast>
+
+</div>
+    <div [hidden] ="onLoginPage">
+        <app-navbar ></app-navbar>
+
+    </div>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+
+
+
+
+
+
+
+
+
+

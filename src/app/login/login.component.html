@@ -1,0 +1,68 @@
+<div class="bg fluid">
+
+  <div class="logos">
+
+    <div class="row">
+
+      <img
+      class="atosWhiteLogo" src="../../assets/atos.logo.white.webp">
+
+      <img
+      class="atosBlueLogo" src="../../assets/Atos.svg.png">
+
+    </div>
+
+</div>
+
+<div class="loginFormDiv">
+
+  <img 
+  class="bidTlogo" src="../../assets/bidt.logo.png">
+
+  <form
+  [formGroup]="loginForm"
+  autocomplete="off"
+  (keyup.enter)="login(username.value, password.value)">
+
+      <div class="form-group">
+
+          <label for="username">
+            Username
+          </label>
+
+          <input type="text"
+          class="form-control"
+          formControlName="username"
+          #username>
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <input type="password"
+          class="form-control"
+          formControlName="password"
+          #password>
+
+        </div>
+
+        <button
+        class="loginBtn"
+        type="button" 
+        (click)="login(username.value, password.value)"
+        >LOGIN</button>
+
+
+    </form>
+
+  </div>
+
+  <footer class="page-footer">
+    For internal use. © Atos S.E. 2019 all rights reserved. Reproduction in whole or in part is prohibited without the written consent of Atos S.E.
+  </footer>
+</div>
+

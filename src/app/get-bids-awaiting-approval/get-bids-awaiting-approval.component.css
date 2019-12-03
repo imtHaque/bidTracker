@@ -1,0 +1,228 @@
+@font-face {
+  src: url('../../assets/stagFont/stagFont/Stag Sans LCG-Light.otf');
+  font-family: 'stagSansLight';
+}
+
+@font-face {
+  src: url('../../assets/stagFont/stagFont/Stag LCG-Light.otf');
+  font-family: 'stagLight';
+  }
+
+
+
+
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 6px;
+  box-sizing: border-box;
+  border: 26px solid rgb(70, 62, 62);
+  border-color: rgb(70, 62, 62) transparent rgb(70, 62, 62) transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
+.fit2center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.container {
+  border: 1px solid rgba(98, 97, 97, 0.144);
+  padding-top: 5px;
+}
+
+.infoTxt {
+  font-family: 'stagLight';
+  font-size: 30px;
+  max-width: 100%;
+  min-height: 100px;
+}
+
+.infoTxt p {
+  font-size: 20px;
+}
+
+.startCard {
+  margin-top: 20px;
+}
+
+.card-body {
+  border-top: none;
+}
+.card-header {
+  font-family: 'stagSansLight';
+  text-align: center;
+  border-bottom: none;
+}
+
+/* header bg depending on stage init*/
+.prospecting {
+
+background: #0089c4; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #0089c4 0%, #9500bf 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  #0089c4 0%,#9500bf 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  #0089c4 0%,#9500bf 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0089c4', endColorstr='#9500bf',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  color: white;
+}
+.await {
+
+background: #898d8d; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #898d8d 0%, #282727 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  #898d8d 0%,#282727 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  #898d8d 0%,#282727 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#898d8d', endColorstr='#282727',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  color: white;
+}
+.clsdWon {
+
+background: #00a59c; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #00a59c 0%, #000242 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  #00a59c 0%,#000242 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  #00a59c 0%,#000242 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a59c', endColorstr='#000242',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  color: white;
+}
+
+.clsdLost {
+
+background: #6639b7; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #6639b7 0%, #a53536 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  #6639b7 0%,#a53536 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  #6639b7 0%,#a53536 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6639b7', endColorstr='#a53536',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  color: white;
+}
+
+.card {
+  cursor: pointer;
+}
+/* header bg depending on stage init*/
+.card-title {
+  text-align: center;
+  font-size: 20px;
+}
+
+.card-text {
+  font-family: 'stagSansLight';
+}
+
+.row {
+  padding-top: 20px;
+}
+.description {
+color: blue;
+margin-left: 30px;
+}
+
+.description p {
+  color: black;
+}
+
+.closedate {
+  color: orangered;
+  margin-left: 28px;
+}
+.closedate p {
+  color: black;
+}
+
+.showSort {
+  min-width: 100px;
+  font-size: 20px;
+  background-color: #0066A1;
+  color: white;
+  border: none;
+}
+
+.showSort:hover {
+
+  background-color: white;
+  color: #0066A1;
+  border: 2px solid #0066A1;
+}
+
+.sortList:hover {
+background-color: #fff;
+cursor: pointer;
+color: #0066A1;
+border: 1px solid #0066A1;
+}
+
+.searchInpt {
+  float: right;
+  font-size: 20px;
+  border-radius: 15px;
+}
+.searchInpt::placeholder {
+  padding-left: 10px;
+}
+
+.searchRslt:hover {
+  background-color: #0066A1;
+  color: white;
+}
+
+* {
+  padding: 0;
+}
+
+.see-more {
+  margin-bottom: 20px;
+  color: white;
+  background: #0066A1;
+  max-width: 80px;
+  max-height: 20px;
+  padding-bottom: 25px;
+  padding-left: 3px;
+  padding-right: 3px;
+  align-self: center;
+}
+
+.see-more:hover {
+  color: #0066A1;
+  background: white;
+  border: 1px solid #0066A1;
+}
+
+@media screen and (max-width: 770px) {
+  .viewallTxt {
+    font-size: 25px;
+   }
+  .searchInpt {
+    position: relative;
+    margin-top: 15px;
+    float: left;
+    width: 100%;
+
+  }
+}

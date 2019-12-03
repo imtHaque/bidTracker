@@ -1,0 +1,121 @@
+
+<div class="welcomeDiv">
+
+    <div class="banner">
+
+    </div>
+
+
+<img class="bidLogo" src="../../assets/bidt.logo.png">
+
+</div>
+
+    <div class="getStarted">
+
+       Let's get started !
+
+      </div>
+
+    <div class="row">
+
+        <div class="col-md-4 col-xs-4">
+
+            <div
+            [routerLink]="['/ng/new']"
+            *ngIf="userRole === 'saleslead'"
+            class="recordBid"
+            >
+
+                <p>
+
+                  <img
+                  
+                  class="addBidImg"
+                  src="../../assets/tip.svg">
+
+                </p>
+                <p></p>
+                Add A Bid Opportunity
+                <p></p>
+              </div>
+
+              <div
+              [routerLink]="['/ng/getAwaitingApprovalOpp']"
+               *ngIf="userRole === 'approver'"
+                class="recordBid">
+
+                <p>
+
+                  <img
+                  
+                  class="addBidImg"
+                  src="../../assets/vision.svg">
+
+                </p>
+                <p></p>
+                Awaiting Approval
+                <p></p>
+              </div>
+
+        </div>
+
+        <div class="col-md-4 col-md-4-offset-1 col-xs-4">
+
+            <div class="viewBid"
+            [routerLink]="['/ng/getOpp']">
+
+                <p>
+
+                  <img
+                  
+                  class="folderIco" src="../../assets/allBids.svg">
+                  </p>
+                  View All Opportunities
+
+                  <p></p>
+              </div>
+              
+        </div>
+
+        <div class="col-md-4 col-md-4-offset-1 col-xs-4">
+
+            <div
+            [routerLink]="['/ng/getSLOpp']"
+            *ngIf="userRole === 'saleslead'"
+            class="recordBid">
+
+                <p>
+
+                  <img
+                  
+                  class="myBidImg" src="../../assets/conversation.svg">
+
+                </p>
+                <p></p>
+                My Bid Opportunities
+                <p></p>
+              </div>
+
+              <div
+              [routerLink]="['/ng/getOpp']"
+            *ngIf="userRole === 'approver'"
+            class="recordBid">
+
+                <p>
+
+                  <img
+                  
+                  class="addBidImg"
+                  src="../../assets/smartphone.svg">
+
+                </p>
+
+                <p></p>
+                Bids Awarded
+                <p></p>
+                
+              </div>
+        </div>
+        
+    </div>
+

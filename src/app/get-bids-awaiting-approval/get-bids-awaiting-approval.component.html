@@ -1,0 +1,105 @@
+<div [hidden]="!showSpinner" class="fit2center">
+  <div class="lds-hourglass" [hidden]="!showSpinner"></div>
+</div>
+
+
+
+
+<div [hidden]="showSpinner"
+>
+
+<div class="container">
+
+  <div class="infoTxt">
+
+      Bids Awaiting Approval
+
+    <input
+    class="searchInpt"
+    #search
+    (click)="searchInputLogic(search.value)"
+    (keyup)="searchInputLogic(search.value)"
+    (focusout)="(search.value = '')"
+    placeholder="Search by Name">
+
+
+    <br>
+    <p></p>
+
+      Sorted by:
+
+      <button
+
+      class="button showSort">
+      {{clickedSortingVar}}
+    </button>
+    <br>
+    <p></p>
+
+
+    <div
+
+    [hidden]="!showSearchResult"
+    class="card card-header searchRslt"
+    *ngFor="let searchRslt of userSearchResult | slice:0:3; let i=index"
+    [routerLink]="['/ng/getOpp', searchRslt.id]">
+      {{searchRslt.name}}
+
+    </div>
+
+    <div [hidden]="!showSortingVar"
+    (click)="sortOpps(sort)"
+    class="card card-header sortList"
+    *ngFor= "let sort of sortingVar">
+      {{sort}}
+    </div>
+
+  </div>
+
+<div
+*ngFor="let opp of opps"
+class="card mb-3 startCard"
+
+[routerLink]="['/ng/getOpp', opp.id]">
+
+  <div
+  [ngClass]="{'prospecting': opp.stagename === 'Prospecting',
+              'await': opp.stagename === 'Awaiting Approval',
+              'clsdWon': opp.stagename === 'Closed Won',
+              'clsdLost': opp.stagename === 'Closed Lost'}"
+
+  class="card-header">
+
+    {{opp.stagename}}
+
+  </div>
+  <div class="card-body">
+    <div class="card-title">{{opp.name}}</div>
+
+    <div class="row">
+
+      <div class="col-xs-6 col-md-6">
+          <div class="card-text description">
+              Description
+          <p>{{opp.description}}</p>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-md-6 col-md-offset-6">
+          <div class="card-text closedate">
+              Deadline
+          <p>{{opp.closedate | date}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <hr>
+
+  <div class="btn btn-primary see-more">See more</div>
+</div>
+
+
+</div>
+
+</div>

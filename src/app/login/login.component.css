@@ -1,0 +1,136 @@
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+}
+
+@font-face {
+  src: url('../../assets/stagFont/stagFont/Stag Sans LCG-Light.otf');
+  font-family: 'stagSansLight';
+}
+
+
+.atosWhiteLogo {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 300px;
+  min-width: 85px;
+  min-height: 50px;
+}
+
+.atosBlueLogo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  max-width: 85px;
+  max-height: 50px;
+}
+
+.bidTlogo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 80px;
+  max-width: 100px;
+}
+.loginFormDiv {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  max-width: 400px;
+  min-width: 100px;
+  margin-top: 20px;
+  background: white;
+  border-radius: 5px;
+  font-family: 'stagSansLight';
+}
+
+.form-group {
+  margin-right: 5%;
+  margin-left: 5%;
+  color: #898D8D;
+}
+.loginBtn {
+  width: stretch;
+  font-family: 'stagSansLight';
+  background: #0066A1;
+  margin-top: 10px;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-bottom: 5%;
+}
+.loginBtn:hover {
+  background: white;
+  color: #0066A1;
+  border: 3px solid #0066A1;
+}
+.bg {
+    height: 100vh;
+    width: 100%;
+    background-color: #f0f1f5;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  font-size: 12px;
+  color: black;
+  left: 10%;
+  right: 10%;
+}
+
+@media screen and (min-width: 720px) {
+  .bg {
+    height: 100vh 100%;
+    width: 100%;
+    background: #e1e3e0 url('../../assets/background-sso3.jpg') no-repeat bottom center fixed;
+    background-size: cover;
+
+  }
+
+  .loginFormDiv {
+
+    margin-top: 110px;
+  }
+  .atosWhiteLogo {
+    max-width: 150px;
+    display: block;
+    margin-top: 30px;
+  }
+
+  .atosBlueLogo {
+    display: none;
+  }
+
+  .page-footer {
+    position: absolute;
+    bottom: 0;
+    font-size: 12px;
+    color: white;
+    left: 30%;
+    right: 20%;
+    text-align: center;
+  }
+
+}
+

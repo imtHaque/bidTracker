@@ -1,0 +1,238 @@
+
+@font-face {
+src: url('../../assets/stagFont/stagFont/Stag LCG-Light.otf');
+font-family: 'stagLight';
+}
+
+@font-face {
+  src: url('../../assets/stagFont/stagFont/Stag Sans LCG-Light.otf');
+  font-family: 'stagSansLight';
+}
+
+.welcomeDiv {
+  /* bg image css*/
+  position: relative;
+    min-width: 100%;
+
+    max-height: 500px;
+    min-height: 420px;
+    overflow: hidden;
+
+    /* txt*/
+
+    text-align: center;
+}
+.banner {
+  background-image: url('../../assets/atos.Banner.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center -250px;
+
+  -webkit-animation: kenburns-bottom-right 5s ease-out both;
+	        animation: kenburns-bottom-right 5s ease-out both;
+}
+
+@-webkit-keyframes kenburns-bottom-right {
+  0% {
+    -webkit-transform: scale(1) translate(0, 0);
+            transform: scale(1) translate(0, 0);
+    -webkit-transform-origin: 84% 84%;
+            transform-origin: 84% 84%;
+  }
+  100% {
+    -webkit-transform: scale(1.25) translate(20px, 15px);
+            transform: scale(1.25) translate(20px, 15px);
+    -webkit-transform-origin: right bottom;
+            transform-origin: right bottom;
+  }
+}
+@keyframes kenburns-bottom-right {
+  0% {
+    -webkit-transform: scale(1) translate(0, 0);
+            transform: scale(1) translate(0, 0);
+    -webkit-transform-origin: 84% 84%;
+            transform-origin: 84% 84%;
+  }
+  100% {
+    -webkit-transform: scale(1.25) translate(20px, 15px);
+            transform: scale(1.25) translate(20px, 15px);
+    -webkit-transform-origin: right bottom;
+            transform-origin: right bottom;
+  }
+}
+
+
+.banner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  }
+  
+
+
+
+
+.welcomeDiv p {
+  color: white;
+  font-size: 40px;
+}
+/*txt animation*/
+.welcomeDiv p {
+	-webkit-animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+@-webkit-keyframes focus-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    -webkit-filter: blur(12px);
+            filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-filter: blur(0px);
+            filter: blur(0px);
+    opacity: 1;
+  }
+}
+@keyframes focus-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    -webkit-filter: blur(12px);
+            filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-filter: blur(0px);
+            filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+/*bid logo animation*/
+
+
+  .bidLogo {
+
+    margin-top: 100px;
+    -webkit-animation: swing-in-top-bck 4s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+            animation: swing-in-top-bck 4s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+  }
+  @-webkit-keyframes swing-in-top-bck {
+    0% {
+      -webkit-transform: rotateX(70deg);
+              transform: rotateX(70deg);
+      -webkit-transform-origin: top;
+              transform-origin: top;
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: rotateX(0deg);
+              transform: rotateX(0deg);
+      -webkit-transform-origin: top;
+              transform-origin: top;
+      opacity: 1;
+    }
+  }
+  @keyframes swing-in-top-bck {
+    0% {
+      -webkit-transform: rotateX(70deg);
+              transform: rotateX(70deg);
+      -webkit-transform-origin: top;
+              transform-origin: top;
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: rotateX(0deg);
+              transform: rotateX(0deg);
+      -webkit-transform-origin: top;
+              transform-origin: top;
+      opacity: 1;
+    }
+  }
+
+
+.row {
+  padding-top: 30px;
+  padding-left: 20px;
+  text-align: center;
+}
+
+.getStarted {
+  text-align: center;
+  padding-top: 20px;
+  margin: 20px;
+  font-size: 8vh;
+  font-family: 'stagLight';
+}
+
+@media only screen and (max-width: 445px) {
+.getStarted {
+  font-size: 5vh;
+  }
+}
+
+.recordBid {
+  font-family: 'stagSansLight';
+  font-size: 30px;
+}
+
+.addBidImg {
+  padding-bottom: 0px;
+  max-height: 400px;
+  max-width: 200px;
+  min-width: auto;
+  min-height: auto;
+  cursor: pointer;
+
+}
+
+.viewBid {
+  font-family: 'stagSansLight';
+  font-size: 30px;
+}
+
+.folderIco {
+  padding-top: 0px;
+  max-height: 400px;
+  max-width: 200px;
+  min-width: auto;
+  min-height: auto;
+  cursor: pointer;
+  
+}
+/* align icons centre*/
+@media only screen and (min-width: 1400px) {
+  .row{
+    position: relative;
+    left: 10%;
+    margin-right: 12%;
+  }
+}
+/* small screen column vertical gap*/
+@media only screen and (max-width: 767px) {
+  [class*="col-"] {
+    margin-bottom: 100px;
+}
+}
+
+.col-md-4 {
+  border: 1px solid rgba(128, 128, 128, 0.74);
+  margin: 50px;
+  max-width: 300px;
+  cursor: pointer;
+}
+
+.col-md-4:hover {
+  background-color: rgba(128, 128, 128, 0.377);
+}
+
+.myBidImg {
+  max-height: 400px;
+  max-width: 200px;
+  min-width: auto;
+  min-height: auto;
+  cursor: pointer;
+}

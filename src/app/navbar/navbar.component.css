@@ -1,0 +1,64 @@
+@font-face {
+  src: url('../../assets/stagFont/stagFont/Stag Sans LCG-Semibold.otf');
+  font-family: 'stagSansSemiBold';
+}
+
+.fontCont {
+  font-family: 'stagSansSemiBold';
+}
+.nav-link{
+  cursor: pointer;
+}
+.card {
+  height: 80%;
+  min-width: 200px;
+  max-width: 400px;
+  position: fixed;
+  z-index: 5;
+  top: 10%;
+  right: 10px;
+  overflow-x: hidden;
+}
+
+.dot {
+width: 5px;
+height: 5px;
+background-color: red;
+border-radius: 50%;
+margin-bottom: 15px;
+}
+.unclickedNotification {
+color: red;
+
+}
+
+#notificationBell {
+  width: 25px;
+  height: 25px;
+  margin-left: 3px;
+}
+
+.atosNavLogo {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+
+.nav-item:after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #0066A1 ;
+  color: #0066A1;
+  transition: width .3s;
+}
+.nav-item:hover::after {
+  width: 100%;
+  transition: width .3s;
+
+}
+
+.nav-item:hover {
+  color: #0066A1;
+}

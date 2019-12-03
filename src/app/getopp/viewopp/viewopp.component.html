@@ -1,0 +1,709 @@
+<div class="fit2center">
+    <div class="lds-hourglass" [hidden]="!showSpinner"></div>
+</div>
+
+<div class="fontCont">
+<div [hidden]="showSpinner">
+<div class="container frstcontainer">
+<div class="overview">Overview </div>
+<div class="bidname">{{bidName}}</div>
+
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'Prospecting'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-2" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="30 70" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-1">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">Prospecting</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'Awaiting Approval'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-3" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="60 40" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-2">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">Awaiting Approval</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'Closed Won'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-4" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="100 0" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-3">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">Closed Won</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'Closed Lost'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-5" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="100 0" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-4">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">Closed Lost</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+
+<div [hidden]="sleadLoggedIn" class="manager-only">
+    <h5>Risk Indicator</h5>
+
+    <div class="risk-renderer">
+        <div *ngIf="0.33 > loseprobability">
+            Low Risk: {{loseprobability * 100 | number: '1.0-0'}} %
+          </div>
+          <div *ngIf="(0.66 >= loseprobability) && (loseprobability >= 0.33)">
+              Medium Risk: {{loseprobability * 100 | number: '1.0-0'}} %
+            </div>
+            <div *ngIf=" loseprobability > 0.66">
+                Caution: {{loseprobability * 100 | number: '1.0-0'}} %
+              </div>
+    </div>
+
+
+
+<div class="progress">
+<div class="progress-bar" id="low-risk"
+[ngStyle]="{
+  'width': lowRiskPB(),
+  'background': 'rgb(20,236,92) linear-gradient(90deg, rgba(20,236,92,1) 0%, rgba(226,238,60,1) 100%)'
+}">
+</div>
+<div class="progress-bar med-risk"
+[ngStyle]="{
+  'width': mediumRiskPB(),
+  'background': '#E2EE3C linear-gradient(90deg, rgba(226,238,60,1) 0%, rgba(238,60,139,1) 100%)'
+}">
+
+  </div>
+  <div class="progress-bar high-risk"
+  [ngStyle]="
+  {'width': highRiskPB(),
+  'background': 'rgb(238,60,139) linear-gradient(90deg, rgba(238,60,139,1) 0%, rgba(222,5,5,1) 100%)'
+}">
+
+    </div>
+</div>
+</div>
+
+<div class="nextactions">
+<h2>Next Actions</h2>
+
+<div *ngIf="taskArray[0] === undefined">
+  <div class="taskMissing">Looks like there are no Tasks set yet  . . .</div>
+</div>
+
+<div
+*ngFor="let task of taskArray">
+<div class="taskList">
+
+  <li>
+    <div class="row">
+      <div class="col-1">
+        <input
+        (click)="updateTaskStatus(task)"
+        [checked]="task.status == 'Completed'"
+        type="checkbox"
+        class="checkbox"></div>
+      <div class="col-10"><div class="taskSubject">{{task.subject}}</div></div>
+    </div>
+
+     <div class="taskDueDate">Due Date: {{task.activitydate}}</div>
+     <br>
+     Comment: <span><div class="taskComment"> {{task.description}}</div></span>
+  </li>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!--Modal-->
+
+<button type="button" class="btn btn-primary addTaskBtn" data-toggle="modal" data-target="#exampleModal">
+  Add Tasks
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title nextactions" id="exampleModalLabel">Add Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="tasks" autocomplete="off">
+          <div class="form-group">
+
+            <label for="c"> Subject</label>
+
+            <input
+            formControlName="subject"
+            type="text"
+            class="form-control transparent-input"
+            id="taskSubject"
+            placeholder="Task Subject">
+
+          </div>
+
+          <div class="form-group">
+            <label for="dueDate">Due Date</label>
+            <input
+            formControlName="duedate"
+            type="date"
+            class="form-control transparent-input"
+            id="dueDate">
+        </div>
+
+        <div class="form-group">
+
+          <label for="assignTo">Assign To</label>
+          <input
+          [hidden]="hideTaskUserListInput"
+          #taskDoer
+          onfocus="this.value=''"
+          value=''
+          (keyup)="AssignTo(taskDoer.value)"
+          type="text"
+          class="form-control transparent-input"
+          id="assignTo"
+          placeholder="Assign to someone">
+          <div [hidden]="!hideTaskUserListInput">
+          <ul class="btn">
+            <li class="btn btn-primary-outline">
+              {{assignToUserHold?.Name}}
+            </li>
+            <div class="btn"></div>
+            <span>
+              <img src="../../assets/icons8-delete-64.png"
+              (click)="onAssignToDelete()"
+              class="deleteUserSelection flaot-right">
+            </span>
+          </ul>
+          </div>
+          <div [hidden]="!showTaskUserList">
+            <ul class="list-group justified"
+                  id="assignTo"
+                  class="btn btn-outline">
+                    <li
+                    (click)="assignToUserSelection(user.id, user.name)"
+                    class="list-group-item list-group-item-action list-group-item-secondary"
+                    *ngFor="let user of users">
+                    {{user.name}}
+                    </li>
+                </ul>
+          </div>
+
+        </div>
+
+        <!-- <div class="form-group">
+          <label for="estimatedValue">Status</label>
+          <br>
+          <div
+          id = "estimatedValue"
+          class="btn"
+          [hidden]="showStatusList"
+          (click)="onStatusClick()">
+          {{status}}
+        </div>
+              <div
+              [hidden]="!showStatusList"
+              type= currency
+              *ngFor="let stats of statusArray">
+                <li
+                id = "estVList"
+                class="btn"
+                (click)="onStatusSelect(stats)">
+                  {{stats}}
+                </li>
+
+              </div>
+        </div> -->
+
+        <div class="form-group">
+          <label for="comment"> Comment</label>
+
+          <textarea
+          formControlName="comment"
+          type="text"
+          class="form-control transparent-input"
+          id="comment"
+          placeholder="Some space for helpful reminders">
+        </textarea>
+
+        </div>
+
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+        type="button" class="taskCancelBtn" data-dismiss="modal">Cancel</button>
+        <button
+        data-dismiss="modal"
+        (click)="saveTask()"
+        class="taskSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal-->
+
+<div class="container1">
+  <div class="breadcrumb">
+
+    <a
+    [ngClass]="{'active' : breadCrumbVar >= 1 }"
+    (click)="oppTab()"
+    (click)="t.select('oppDetail')">
+     
+      <span
+
+      class="breadcrumb__inner">
+        <span
+
+        class="breadcrumb__title">Opportunity Details</span>
+      </span>
+    </a>
+    <a
+    [ngClass]="{'active' : breadCrumbVar >= 2 }"
+    (click)="preBidTab()"
+    (click)="t.select('preBid')">
+      <span
+
+      class="breadcrumb__inner">
+        <span
+
+        class="breadcrumb__title">Pre-Bid Details</span>
+      </span>
+    </a>
+    
+  </div>
+</div>
+
+
+<div class="container scnd-container">
+    <form [formGroup]="mainForm" autocomplete="off">
+        <div formGroupName="oppDetail">
+        <ngb-tabset #t="ngbTabset" class="tabselection" [justify]="currentJustify">
+
+            <ngb-tab title="Opportunity Detail" id="oppDetail" class="oppDetail">
+                <div class="container tab-content">
+                <ng-template ngbTabContent>
+
+
+        <div class="form-group">
+          <label for="name">Project Name</label>
+          <input
+          formControlName="name"
+          type="text"
+          class="form-control transparent-input"
+          id="name"
+          placeholder="Name of the Project">
+
+      </div>
+
+      <div class="form-group">
+
+          <label for="description">Desccription</label>
+          <textarea
+          formControlName="description"
+          type="text"
+          class="form-control transparent-input"
+          id="description"
+          placeholder="Description"></textarea>
+
+      </div>
+
+      <div class="form-group">
+
+          <label for="saleslead">Sales Lead</label>
+          <input
+          [hidden]="hideInput"
+          #salesLead
+          onfocus="this.value=''"
+          value=''
+          (keyup)="SLSearch(salesLead.value)"
+          type="text"
+          class="form-control transparent-input"
+          id="saleslead"
+          placeholder="Pioneer">
+          <div [hidden]="!hideInput">
+          <ul class="btn">
+            <li class="btn btn-primary-outline">
+              {{salesLeadHold?.Name}}
+            </li>
+            <div class="btn"></div>
+            <span>
+              <img src="../../assets/icons8-delete-64.png"
+              (click)="onUserDelete()"
+              class="deleteUserSelection flaot-right">
+            </span>
+          </ul>
+          </div>
+          <div [hidden]="!showUserList">
+            <ul class="list-group justified"
+                  id="saleslead"
+                  class="btn btn-outline">
+                    <li
+                    (click)="selectedUser(user.id, user.name)"
+                    class="list-group-item list-group-item-action list-group-item-secondary"
+                    *ngFor="let user of users">
+                    {{user.name}}
+                    </li>
+                </ul>
+          </div>
+
+      </div>
+
+      <div class="form-group">
+
+          <label for="sharePointLink">Share Point Link</label>
+          <input
+          formControlName="sharePointLink"
+          type="text"
+          class="form-control transparent-input"
+          id="sharePointLink"
+          placeholder="Share Point Link">
+
+      </div>
+
+      <div class="form-group">
+
+          <label for="website">Website</label>
+          <input
+          formControlName="website"
+          type="text"
+          class="form-control transparent-input"
+          id="website"
+          placeholder="Website">
+
+      </div>
+
+      <div class="form-group">
+          <label for="probability">Probability</label>
+          <br>
+            <ul
+              id="probability"
+              class="btn">
+
+              <li
+              [hidden]="showProbList"
+              (click)="onProbClick()"
+              >{{(probability/100) | percent}}
+            </li>
+
+              <div [hidden]="!showProbList"
+              type= number
+              *ngFor="let prob of probabilityArray">
+
+                <li
+                class="btn"
+                (click)="onProbSelect(prob)">
+                  {{(prob/100) | percent}}
+                </li>
+
+              </div>
+
+            </ul>
+      </div>
+
+
+      <div class="form-group">
+        <label for="estimatedValue">Estimated Value</label>
+        <br>
+        <div
+        id = "estimatedValue"
+        class="btn"
+        [hidden]="showEsTValueList"
+        (click)="onEstClick()">
+        {{estimatedValue | currency:'GBP'}}
+      </div>
+            <div
+            [hidden]="!showEsTValueList"
+            type= currency
+            *ngFor="let estV of estimatedValueArray">
+              <li
+              id = "estVList"
+              class="btn"
+              (click)="onEstSelect(estV)">
+                {{estV | currency:'GBP'}}
+              </li>
+
+            </div>
+    </div>
+
+           </ng-template>
+          </div>
+        </ngb-tab>
+
+        <ngb-tab title="Pre Bid Information" id="preBid"
+        [disabled]="(mainForm.get('oppDetail').get('name').invalid ||
+        mainForm.get('oppDetail').get('description').invalid ||
+        mainForm.get('oppDetail').get('sharePointLink').invalid ||
+        mainForm.get('oppDetail').get('website').invalid ||
+        mainForm.get('oppDetail').get('estimatedValue').invalid)">
+
+            <div class="container">
+            <ng-template ngbTabContent>
+
+                    <div class="form-group">
+                        <label for="wbsCode">WBS Code</label>
+                        <input
+                        formControlName="wbsCode"
+                        type="text"
+                        class="form-control transparent-input"
+                        id="wbsCode"
+                        placeholder="WBS Code">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bidDeadline">Bid Deadline</label>
+                        <input
+                        formControlName="bidDeadline"
+                        type="date"
+                        class="form-control transparent-input"
+                        id="bidDeadline"
+                        placeholder="Bid Deadline">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="costs">Cost</label>
+                        <input
+                        formControlName="costs"
+                        type="number"
+                        class="form-control transparent-input"
+                        id="costs">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="effortDays">Effort Days</label>
+                        <input
+                        formControlName="effortDays"
+                        type="number"
+                        class="form-control transparent-input"
+                        id="effortDays">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="proposedBidTeam">
+                          Proposed Bid Team
+                        </label>
+
+                        <input
+                        [hidden]="disableInput"
+                        #bidTeamInput
+                        value=''
+                        onfocus="this.value=''"
+                        (keyup)="findBidTeamUser(bidTeamInput.value)"
+                        class="form-control transparent-input"
+                        placeholder="Invite your friends!"
+                        type="text"
+                        id="proposedBidTeam">
+                        <div class="form-display">
+                            <ul class="btn" [hidden]="bidTeamArray == null">
+                                <li
+                                *ngFor="let bidTeam of bidTeamArray; let i = index"
+                                class="btn btn-primary-outline float-left">
+                                  {{bidTeam.User__r?.Name}}
+                                  <a [ngStyle]="{
+                                    'color': 'rgb(237, 83, 88)',
+                                    'cursor': 'pointer'
+                                  }"
+                                  class="row-sm-4" (click)="bidTeamDelete(i)">X</a>
+                                </li>
+                              </ul>
+                        </div>
+
+
+
+                          <hr>
+                        <ul [hidden]="!showBidTeamUserSearchList" class="btn btn-outline">
+                          <li
+                          class="list-group-item list-group-item-action list-group-item-secondary"
+                          *ngFor="let user of users"
+                          (click)="bidTeamUserSelection(user.name, user.id)">
+                            {{user.name}}
+                          </li>
+                        </ul>
+                        </div>
+            </ng-template>
+          </div>
+        </ngb-tab>
+    </ngb-tabset>
+    </div>
+    </form>
+  </div>
+    </div>
+
+    <nav class="navbar fixed-bottom bg-dark">
+
+      <div *ngIf="sleadLoggedIn" class="d-flex justify-content-between">
+        <div
+
+        class="p-2 bd-highlight">
+          <button
+          [hidden]="(mainForm.invalid) || hideApprvlBtn || (approverLoggedIn)"
+          (click)="requestForApproval()"
+          class="btmNavBtn"
+          role="button">
+            Get Approved
+          </button>
+        </div>
+
+        <div
+        [hidden]="hideApprvlBtn || (approverLoggedIn)"
+        class="p-2 bd-highlight">
+          <button
+
+          (click)="save()"
+          class="btmNavBtn"
+          role="button">
+            Save
+          </button>
+        </div>
+
+        <div
+        [hidden]="hideAccRejectBtn || (sleadLoggedIn)"
+        (click)="rejectOpp()"
+        class="p-2 bd-highlight">
+          <button
+
+
+          class="btmNavBtn"
+          role="button">
+            Reject
+          </button>
+        </div>
+
+        <div
+        [hidden]="hideAccRejectBtn || (sleadLoggedIn)"
+        (click)="acceptOpp()"
+        class="p-2 bd-highlight">
+          <button
+
+          class="btmNavBtn"
+          role="button">
+            Approve
+          </button>
+        </div>
+
+        <div
+        [hidden]="!(t.activeId == 'oppDetail')"
+        class="p-2 bd-highlight">
+          <button
+          (click)="t.select('preBid')"
+          class="btmNavBtn"
+          role="button">
+            Next
+          </button>
+        </div>
+        <div
+        [hidden]="!(t.activeId == 'preBid')"
+        class="p-2 bd-highlight">
+          <button
+          (click)="t.select('oppDetail')"
+          class="btmNavBtn"
+          role="button">
+            Previous
+          </button>
+        </div>
+      </div>
+
+
+      <div *ngIf="approverLoggedIn" class="d-flex justify-content-between">
+
+
+        <div
+        [hidden]="hideAccRejectBtn || (sleadLoggedIn)"
+        class="p-2 bd-highlight">
+          <button
+
+          (click)="rejectOpp()"
+          class="btmNavBtn"
+          role="button">
+            Reject
+          </button>
+        </div>
+
+        <div
+        [hidden]="hideAccRejectBtn || (sleadLoggedIn)"
+        class="p-2 bd-highlight">
+          <button
+          (click)="acceptOpp()"
+          class="btmNavBtn"
+          role="button">
+            Approve
+          </button>
+        </div>
+
+        <div
+        [hidden]="!(t.activeId == 'oppDetail')"
+        class="p-2 bd-highlight">
+          <button
+          (click)="t.select('preBid')"
+          class="btmNavBtn"
+          role="button">
+            Next
+          </button>
+        </div>
+        <div
+        [hidden]="!(t.activeId == 'preBid')"
+        class="p-2 bd-highlight">
+          <button
+          (click)="t.select('oppDetail')"
+          class="btmNavBtn"
+          role="button">
+            Previous
+          </button>
+        </div>
+      </div>
+</nav>
+</div>
+
+
+
+

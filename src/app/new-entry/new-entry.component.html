@@ -1,0 +1,278 @@
+<div class="container">
+<form [formGroup]="mainForm" autocomplete="off">
+    <h3>Add an Opportunity</h3>
+  <ngb-tabset #t="ngbTabset" class="tabselection" [justify]="currentJustify">
+
+
+      <ngb-tab title="Opportunity Detail" id="oppDetail" class="oppDetail">
+          <div class="container tab-content">
+            <ng-template ngbTabContent>
+                <div formGroupName="oppDetail">
+
+                  <div class="form-group">
+
+                    <label for="name">Project Name</label>
+                    <input
+                    formControlName="name"
+                    type="text"
+                    class="form-control transparent-input"
+                    id="name"
+                    placeholder="Name of the Project">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea
+                    formControlName="description"
+                    type="text"
+                    class="form-control transparent-input"
+                    id="description"
+                    placeholder="Short Description"></textarea>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="saleslead">Sales Lead</label>
+                    <input
+                    [hidden]="hideInput"
+                    #salesLead
+                    onfocus="this.value=''"
+                    value=''
+                    (keyup)="SLSearch(salesLead.value)"
+                    type="text"
+                    class="form-control transparent-input"
+                    id="saleslead"
+                    placeholder="Pioneer">
+                    <div
+                    [hidden]="!hideInput">
+                    <ul class="btn">
+                      <li class="btn btn-primary-outline">
+                        {{displaySelectedUser}}
+                      </li>
+                      <div class="btn"></div>
+                      <span>
+                        <img src="../../assets/icons8-delete-64.png"
+                        (click)="onUserDelete()"
+                        class="deleteUserSelection flaot-right">
+                      </span>
+                    </ul>
+                    </div>
+                    <div [hidden]="!showUserList">
+                      <ul class="list-group justified"
+                            id="saleslead"
+                            class="btn btn-outline">
+                              <li
+                              (click)="selectedUser(user.id, user.name)"
+                              class="list-group-item list-group-item-action list-group-item-secondary"
+                              *ngFor="let user of users">
+                              {{user.name}}
+                              </li>
+                          </ul>
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="sharePointLink">Share Point Link</label>
+                    <input
+                    formControlName="sharePointLink"
+                    type="text"
+                    class="form-control transparent-input"
+                    id="sharePointLink"
+                    placeholder="URL">
+                </div>
+
+
+                  <div class="form-group">
+                    <label for="website">Website</label>
+                    <input
+                    formControlName="website"
+                    type="text"
+                    class="form-control transparent-input"
+                    id="website"
+                    placeholder="URL">
+                  </div>
+
+
+                    <div class="form-group">
+                        <label for="probability">Probability</label>
+                        <br>
+                          <select
+                            id="probability"
+                            formControlName="probability"
+                            class="btn btn-outline-primary">
+                              <option
+                              [value]="prob"
+                              *ngFor="let prob of probabilityArray">
+                              {{prob | percent}}
+                            </option>
+                          </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estimatedValue">Estimated Value</label>
+                        <br>
+                        <select
+                        id="estimatedValue"
+                        formControlName="estimatedValue"
+                        class="btn btn-outline-primary">
+                          <option
+                          [value]="estValue"
+                          *ngFor="let estValue of estimatedValueArray">
+                          {{estValue | currency:'GBP'}}
+                        </option>
+                      </select>
+                    </div>
+                        <hr>
+    </div>
+    </ng-template>
+    </div>
+  </ngb-tab>
+  <!-- [disabled]="!mainForm.get('oppDetail').valid" -->
+  <ngb-tab title="Pre Bid Information" [disabled]="!mainForm.get('oppDetail').valid" id="preBid">
+    <div class="container">
+    <ng-template ngbTabContent>
+      <div formGroupName="preBid">
+
+          <div class="form-group">
+              <label for="wbsCode">WBS Code</label>
+              <input
+              formControlName="wbsCode"
+              type="text"
+              class="form-control transparent-input"
+              id="wbsCode"
+              placeholder="WBS Code">
+          </div>
+
+          <div class="form-group">
+              <label for="bidDeadline">Bid Deadline</label>
+              <input
+              formControlName="bidDeadline"
+              type="date"
+              class="form-control transparent-input"
+              id="bidDeadline"
+              placeholder="Bid Deadline">
+          </div>
+
+          <div class="form-group">
+              <label for="costs">Cost</label>
+              <input
+              formControlName="costs"
+              placeholder="£ 3.50"
+              type="currency"
+              class="form-control transparent-input"
+              id="costs">
+          </div>
+
+          <div class="form-group">
+              <label for="effortDays">Effort Days</label>
+              <input
+              formControlName="effortDays"
+              placeholder="3 days"
+              type="number"
+              class="form-control transparent-input"
+              id="effortDays">
+          </div>
+
+          <div class="form-group">
+            <label for="proposedBidTeam">
+              Proposed Bid Team
+            </label>
+
+            <input
+            #bidTeamInput
+            value=''
+            onfocus="this.value=''"
+            (keyup)="findBidTeamUser(bidTeamInput.value)"
+            class="form-control transparent-input"
+            placeholder="Invite your friends!"
+            type="text"
+            id="proposedBidTeam">
+
+                <ul class="btn" [hidden]="bidTeamArray.length == 0">
+                    <li
+                    *ngFor="let bidTeam of bidTeamArray; let i = index"
+                    class="btn btn-primary-outline float-right">
+                      {{bidTeam.name}}
+                      <a [ngStyle]="{
+                        'color': 'rgb(237, 83, 88)',
+                        'cursor': 'pointer'
+                      }"
+                      class="row-sm-4" (click)="bidTeamDelete(i)">X</a>
+                    </li>
+                  </ul>
+
+
+              <hr>
+            <ul [hidden]="!showBidTeamUserSearchList" class="btn btn-outline">
+              <li
+              class="list-group-item list-group-item-action list-group-item-secondary"
+              *ngFor="let user of users"
+              (click)="bidTeamUserSelection(user.name, user.id)">
+                {{user.name}}
+              </li>
+            </ul>
+
+            </div>
+       </div>
+    </ng-template>
+  </div>
+  </ngb-tab>
+</ngb-tabset>
+  </form>
+
+  <nav class="navbar fixed-bottom bg-dark">
+    <div class="d-flex justify-content-between">
+
+        <div
+        
+        class="p-2 bd-highlight">
+        
+          <button
+          disabled
+          class="hidden-btn"
+          role="button">
+            
+          </button>
+        </div>
+
+      <div
+
+      class="p-2 bd-highlight">
+      
+        <button
+
+        (click)="save()"
+        class="btmNavBtn"
+        role="button">
+          Save
+        </button>
+      </div>
+
+
+      <div
+      [hidden]="!(t.activeId == 'oppDetail')"
+      class="p-2 bd-highlight">
+        <button
+        (click)="t.select('preBid')"
+        class="btmNavBtn"
+        role="button">
+          Next
+        </button>
+      </div>
+      <div
+      [hidden]="!(t.activeId == 'preBid')"
+      class="p-2 bd-highlight">
+        <button
+        (click)="t.select('oppDetail')"
+        class="btmNavBtn"
+        role="button">
+          Previous
+        </button>
+      </div>
+    </div>
+    </nav>
+  </div>

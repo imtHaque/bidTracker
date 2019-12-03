@@ -1,0 +1,151 @@
+@font-face {
+  src: url('../../assets/stagFont/stagFont/Stag LCG-Light.otf');
+  font-family: 'stagLight';
+}
+
+@font-face {
+  src: url('../../assets/stagFont/stagFont/Stag Sans LCG-Light.otf');
+  font-family: 'stagSansLight';
+}
+
+h3 {
+  margin-bottom: 20px;
+  font-family: 'stagLight';
+}
+
+
+label{
+  color: black;
+  font-family: 'stagSansLight';
+}
+input.transparent-input{
+  color: black;
+  background-color:transparent !important;
+  border: 0 !important;
+  font-family: 'stagSansLight';
+}
+
+textarea.transparent-input{
+  color: black;
+  background-color:transparent !important;
+  border: 0 !important;
+  font-family: 'stagSansLight';
+}
+.btn-primary-outline {
+  background-color: transparent;
+  border-color: rgba(243, 245, 247, 0.74);
+  color: black;
+  margin: 3px;
+}
+
+.save_button {
+  max-width: 30px;
+  height: auto;
+  width: auto;
+}
+.next_button {
+  max-width: 35px;
+  height: auto;
+  width: auto;
+}
+
+.userSelection {
+  background-color: transparent;
+  border-color: rgb(10, 10, 10);
+}
+
+.deleteUserSelection {
+  max-width: 20px;
+  height: auto;
+  width: auto;
+  border: 1px;
+}
+::placeholder {
+  color: rgba(193, 199, 227, 0.561);
+  font-style: 'stagSansLight';
+}
+:host ::ng-deep .tabselection a.nav-link {
+  font-size: 14px;
+	text-align: center;
+	color: #666;
+  cursor: default;
+  border-left: 0;
+	position: relative;
+	background-color: #d9e3f7;
+  transition: background-color 0.2s ease;
+  margin-right: 15px !important;
+}
+
+:host ::ng-deep .tabselection a.nav-link:after,
+:host ::ng-deep .tabselection a.nav-link:before{
+	content: " ";
+	position: absolute;
+	top: 1px;
+	right: -17px;
+	width: 0;
+	height: 0;
+	border-top: 22px solid transparent;
+	border-bottom: 19px solid transparent;
+	border-left: 17px solid #d9e3f7;
+	z-index: 1;
+  transition: border-color 0.2s ease;
+}
+
+:host ::ng-deep .tabselection a.nav-link:before {
+	right: auto;
+	left: 0;
+	border-left: 17px solid #fff;
+  z-index: 0;
+}
+:host ::ng-deep .tabselection a.nav-link:first-child:before
+:host ::ng-deep ul.nav.nav-tabs.nav-justified {
+border-bottom: 0px;
+}
+
+
+:host ::ng-deep .tabselection a.nav-link.active {
+	color: #fff;
+	background-color: #0089C4;
+}
+:host ::ng-deep .tabselection a.nav-link.active:after{
+  border-left: 17px solid #0089C4;
+}
+
+:host ::ng-deep .tab-content {
+margin-top: 15px;
+padding: 20px;
+box-shadow: 5px 5px 8px 8px rgba(7, 0, 8, 0.226);
+width:100%;
+}
+
+
+.d-flex {
+  width: 100%;
+}
+
+
+.btmNavBtn {
+  border: none;
+  background-color: #0066A1;
+  color: white;
+}
+
+.navbar .fixed-bottom .bg-dark {
+font-family: 'stagSansLight';
+}
+
+.hidden-btn {
+
+border: 0;  
+color: rgba(52,58,64,1);
+background: rgba(52,58,64,1);
+}
+
+@media screen and (max-width: 360px) {
+
+  :host ::ng-deep .tabselection a.nav-link {
+    height: 45px;
+    font-size: 10px;
+  }
+
+}

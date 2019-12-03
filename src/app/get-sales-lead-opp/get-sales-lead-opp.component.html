@@ -1,0 +1,296 @@
+<div [hidden]="!showSpinner" class="fit2center">
+    <div class="lds-hourglass" [hidden]="!showSpinner"></div>
+</div>
+
+
+
+
+<div [hidden]="showSpinner">
+
+<div class="container">
+
+    <div class="infoTxt">
+
+      <div class="viewallTxt">My Bids</div>
+       <input
+        class="searchInpt"
+        #search
+        (click)="searchInputLogic(search.value)"
+        (keyup)="searchInputLogic(search.value)"
+        (focusout)="(search.value = '')"
+        placeholder="Search by name">
+
+        <br>
+        <p></p>
+
+
+        <div class="container1">
+            <div class="breadcrumb">
+                <a
+                class="active"
+                (click)="sortOpps('Deadline', 0)">
+                  <span
+
+                  class="breadcrumb__inner">
+                    <span
+
+                    class="breadcrumb__title">Deadline</span>
+                  </span>
+                </a>
+
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 1 }"
+              (click)="sortOpps('Prospecting', 1)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">Prospecting</span>
+                </span>
+              </a>
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 2}"
+              (click)="sortOpps('Awaiting Approval', 2)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">Approval</span>
+                </span>
+              </a>
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 3}"
+              (click)="sortOpps('Closed Lost', 3)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">Closed Lost</span>
+                </span>
+              </a>
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 4}"
+              (click)="sortOpps('Closed Won', 4)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">Closed Won</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+<br>
+<p></p>
+<br>
+
+<div class="mobile_view">
+    Sort by:
+
+      <button
+      (click)="showSort()"
+      class="button showSort">
+      {{clickedSortingVar}}
+    </button>
+    <div [hidden]="!showSortingVar"
+    (click)="sortOpps(sort)"
+    class="card card-header sortList"
+    *ngFor= "let sort of sortingVar">
+      {{sort}}
+    </div>
+
+  </div>
+
+      <div
+
+      [hidden]="!showSearchResult"
+      class="card card-header searchRslt"
+      *ngFor="let searchRslt of userSearchResult | slice:0:3; let i=index"
+      [routerLink]="['/ng/getOpp', searchRslt.id]">
+        {{searchRslt.name}}
+
+      </div>
+
+      <!-- <div [hidden]="!showSortingVar"
+      (click)="sortOpps(sort)"
+      class="card card-header sortList"
+      *ngFor= "let sort of sortingVar">
+        {{sort}}
+      </div> -->
+
+    </div>
+
+  <div
+  *ngFor="let opp of opps"
+  [hidden]="((opp.stagename !== clickedSortingVar)
+  && (clickedSortingVar !== 'Deadline'))"
+  class="card mb-3 startCard"
+
+  [routerLink]="['/ng/getOpp', opp.id]">
+
+    <div
+    [ngClass]="{'prospecting': opp.stagename === 'Prospecting',
+                'await': opp.stagename === 'Awaiting Approval',
+                'clsdWon': opp.stagename === 'Closed Won',
+                'clsdLost': opp.stagename === 'Closed Lost'}"
+
+    class="card-header">
+
+      {{opp.stagename}}
+
+    </div>
+    <div class="card-body">
+      <div class="card-title">{{opp.name}}</div>
+
+      <div class="row">
+
+        <div class="col-xs-6 col-md-6">
+            <div class="card-text description">
+                Description
+            <p>{{opp.description}}</p>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-md-6 col-md-offset-6">
+            <div class="card-text closedate">
+                Deadline
+            <p>{{opp.closedate | date}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+<div class="btn btn-primary see-more">See more</div>
+
+  </div>
+
+
+
+</div>
+
+
+
+    <!-- <div class="stageBoxes">
+<ul>
+    <li>
+
+      <div class="prospectingbox">
+      <div class="card-header prospecting tital">Prospecting</div>
+
+      <div class="card-body prospecting">
+        <div
+        [routerLink]="['/getOpp', opp.id]"
+        *ngFor="let opp of opps">
+
+        <div
+        [hidden]="opp.stagename != 'Prospecting'"
+        class="card mb-1"
+        >
+          <div
+          class="card-header secondary">
+            <h5>{{opp.name}}</h5>
+          </div>
+            <div
+            class="card-body">
+                    <div class="row">
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col">
+                          Deadline: {{opp.closedate}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">Description: {{opp.description}}</div>
+                    </div>
+            </div>
+        </div>
+      </div>
+        </div>
+      </div>
+        </li>
+
+ <li>
+<div class="approvalbox">
+  <div class="card-header approval tital">Awaiting Approval</div>
+
+  <div class="card-body approval">
+<div
+[routerLink]="['/getOpp', opp.id]"
+*ngFor="let opp of opps">
+
+<div
+[hidden]="opp.stagename != 'Awaiting Approval'"
+class="card mb-1"
+>
+  <div
+  class="card-header secondary">
+    <h5>{{opp.name}}</h5>
+  </div>
+    <div
+    class="card-body">
+            <div class="row">
+            </div>
+            <br>
+            <div class="row">
+
+              <div class="col">
+                  Deadline: {{opp.closedate}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">Description: {{opp.description}}</div>
+            </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</li>
+
+<li>
+
+  <div class="wonbox">
+  <div class="card-header won tital">Closed Won</div>
+
+  <div class="card-body won">
+    <div
+    [routerLink]="['/getOpp', opp.id]"
+    *ngFor="let opp of opps">
+
+    <div
+    [hidden]="opp.stagename != 'Closed Won'"
+    class="card mb-1"
+    >
+      <div
+      class="card-header secondary">
+        <h5>{{opp.name}}</h5>
+      </div>
+        <div
+        class="card-body">
+                <div class="row">
+                </div>
+                <br>
+                <div class="row">
+
+                  <div class="col">
+                      Deadline: {{opp.closedate}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Description: {{opp.description}}</div>
+                </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+    </li>
+</ul>
+</div> -->
