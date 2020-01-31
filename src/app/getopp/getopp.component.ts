@@ -74,7 +74,7 @@ showSort() {
 }
 
 sortOpps(clik, varNum?) {
-
+  console.log(clik);
   this.clickedSortingVar = clik;
   this.showSortingVar = false;
   this.holdBreadCrumbVar = varNum;

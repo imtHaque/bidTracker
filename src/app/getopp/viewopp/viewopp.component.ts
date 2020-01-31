@@ -56,6 +56,7 @@ showUserList = false;
 
 // Form init
  name: string;
+ accountName: string;
  description: string;
  sharePointLink: string;
  website: string;
@@ -93,6 +94,11 @@ fm;
  showTaskUserList: boolean;
  hideTaskUserListInput: boolean;
  breadCrumbVar = 1;
+
+ //competitors
+
+ hideCompetitorInput: boolean;
+
 
 
 mainForm: FormGroup;
@@ -149,8 +155,15 @@ mainForm: FormGroup;
         for (i = 0; i < this.nodeService.opp.length; i++) {
         if (this.nodeService.opp[i].id === routeParams.id ) {
 
+          console.log(this.nodeService.opp[i]);
+
           this.stageName = this.nodeService.opp[i].stagename;
           this.bidName = this.nodeService.opp[i].name;
+
+          if ((this.nodeService.opp[i].account)) {
+            
+          this.accountName = this.nodeService.opp[i].account.Name;
+          }
 
           this.formId = this.nodeService.opp[i].id;
           this.probability = (this.nodeService.opp[i].probability);
@@ -231,11 +244,16 @@ mainForm: FormGroup;
       console.log(this.nodeService.opp.length);
       this.nodeService.getSingleOpp(routeParams.id)
                 .subscribe(
-
+                  
                 singleOpp => {
                   this.stageName = singleOpp[0].stagename;
                   this.bidName = singleOpp[0].name;
 
+                  if((singleOpp[0].account)) {
+                    this.accountName = singleOpp[0].account.Name;
+                  }
+                  
+                  console.log(singleOpp[0]);
                   this.formId = singleOpp[0].id;
                   this.probability = (singleOpp[0].probability);
                   if (singleOpp[0].amount != null) {
@@ -370,6 +388,15 @@ mainForm: FormGroup;
       this.showBidTeamUserSearchList = false;
       return null;
     }
+  }
+
+  showBi() {
+    console.log(this.mainForm.value);
+  }
+
+  competitorSearch(input) {
+
+
   }
 
   SLSearch(userInput?: string) {
@@ -548,7 +575,6 @@ mainForm: FormGroup;
         this.nodeService.requestApproval(this.mainForm.value, this.formId)
         .subscribe(
           () => {
-            this.deleteTeam();
             this.nodeService.toastFire(true, 'Sent for Approval');
             this.router.navigate(['/ng/homePage']);
           }

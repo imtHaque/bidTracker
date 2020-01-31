@@ -6,6 +6,7 @@
 <div [hidden]="showSpinner">
 <div class="container frstcontainer">
 <div class="overview">Overview </div>
+<div class="accName">{{accountName}}</div>
 <div class="bidname">{{bidName}}</div>
 
 
@@ -16,7 +17,7 @@ class="svg-item">
   <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
     <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
     <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
-    <circle class="donut-segment donut-segment-2" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="30 70" stroke-dashoffset="25"></circle>
+    <circle class="donut-segment donut-segment-2" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="5 95" stroke-dashoffset="25"></circle>
     <g class="donut-text donut-text-1">
 
       <text y="50%" transform="translate(0, 2)">
@@ -29,16 +30,124 @@ class="svg-item">
 
 <!-- donut -->
 <div
-*ngIf="stageName === 'Awaiting Approval'"
+*ngIf="stageName === 'Qualification'"
 class="svg-item">
   <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
     <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
     <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
-    <circle class="donut-segment donut-segment-3" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="60 40" stroke-dashoffset="25"></circle>
+    <circle class="donut-segment donut-segment-q" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="15 85" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-1">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">Qualification</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'PQQ Prepartaion'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-pp" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="25 75" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-1">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">PQQ Preparation</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'PQQ Submitted'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-ps" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="35 65" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-1">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">PQQ Submitted</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'ITT Preparation'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-ip" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="45 55" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-1">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">ITT Preparation</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'ITT Submitted'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-is" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="55 45" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-1">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">ITT Submitted</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'Presentation'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-pres" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="65 35" stroke-dashoffset="25"></circle>
+    <g class="donut-text donut-text-1">
+
+      <text y="50%" transform="translate(0, 2)">
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">Presentation</tspan>
+      </text>
+    </g>
+  </svg>
+</div>
+<!-- donut -->
+
+<!-- donut -->
+<div
+*ngIf="stageName === 'Awaiting Award'"
+class="svg-item">
+  <svg width="100%" height="100%" viewBox="0 0 40 40" class="donut">
+    <circle class="donut-hole" cx="20" cy="20" r="15.91549430918954" fill="#fff"></circle>
+    <circle class="donut-ring" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5"></circle>
+    <circle class="donut-segment donut-segment-3" cx="20" cy="20" r="15.91549430918954" fill="transparent" stroke-width="3.5" stroke-dasharray="85 15" stroke-dashoffset="25"></circle>
     <g class="donut-text donut-text-2">
 
       <text y="50%" transform="translate(0, 2)">
-        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">Awaiting Approval</tspan>
+        <tspan x="50%" text-anchor="middle" class="donut-stageTxt">Awaiting Award</tspan>
       </text>
     </g>
   </svg>
@@ -159,7 +268,9 @@ class="svg-item">
 
 <!--Modal-->
 
-<button type="button" class="btn btn-primary addTaskBtn" data-toggle="modal" data-target="#exampleModal">
+<button 
+(click)="showBi()"
+type="button" class="btn btn-primary addTaskBtn" data-toggle="modal" data-target="#exampleModal">
   Add Tasks
 </button>
 
@@ -182,8 +293,7 @@ class="svg-item">
             formControlName="subject"
             type="text"
             class="form-control transparent-input"
-            id="taskSubject"
-            placeholder="Task Subject">
+            id="taskSubject">
 
           </div>
 
@@ -207,8 +317,7 @@ class="svg-item">
           (keyup)="AssignTo(taskDoer.value)"
           type="text"
           class="form-control transparent-input"
-          id="assignTo"
-          placeholder="Assign to someone">
+          id="assignTo">
           <div [hidden]="!hideTaskUserListInput">
           <ul class="btn">
             <li class="btn btn-primary-outline">
@@ -268,8 +377,7 @@ class="svg-item">
           formControlName="comment"
           type="text"
           class="form-control transparent-input"
-          id="comment"
-          placeholder="Some space for helpful reminders">
+          id="comment">
         </textarea>
 
         </div>
@@ -341,20 +449,18 @@ class="svg-item">
           formControlName="name"
           type="text"
           class="form-control transparent-input"
-          id="name"
-          placeholder="Name of the Project">
+          id="name">
 
       </div>
 
       <div class="form-group">
 
-          <label for="description">Desccription</label>
+          <label for="description">Description</label>
           <textarea
           formControlName="description"
           type="text"
-          class="form-control transparent-input"
-          id="description"
-          placeholder="Description"></textarea>
+          class="form-control transparent-input descForm"
+          id="description"></textarea>
 
       </div>
 
@@ -369,8 +475,7 @@ class="svg-item">
           (keyup)="SLSearch(salesLead.value)"
           type="text"
           class="form-control transparent-input"
-          id="saleslead"
-          placeholder="Pioneer">
+          id="saleslead">
           <div [hidden]="!hideInput">
           <ul class="btn">
             <li class="btn btn-primary-outline">
@@ -406,8 +511,7 @@ class="svg-item">
           formControlName="sharePointLink"
           type="text"
           class="form-control transparent-input"
-          id="sharePointLink"
-          placeholder="Share Point Link">
+          id="sharePointLink">
 
       </div>
 
@@ -418,8 +522,7 @@ class="svg-item">
           formControlName="website"
           type="text"
           class="form-control transparent-input"
-          id="website"
-          placeholder="Website">
+          id="website">
 
       </div>
 
@@ -496,8 +599,7 @@ class="svg-item">
                         formControlName="wbsCode"
                         type="text"
                         class="form-control transparent-input"
-                        id="wbsCode"
-                        placeholder="WBS Code">
+                        id="wbsCode">
                     </div>
 
                     <div class="form-group">
@@ -506,8 +608,7 @@ class="svg-item">
                         formControlName="bidDeadline"
                         type="date"
                         class="form-control transparent-input"
-                        id="bidDeadline"
-                        placeholder="Bid Deadline">
+                        id="bidDeadline">
                     </div>
 
                     <div class="form-group">
@@ -529,6 +630,20 @@ class="svg-item">
                     </div>
 
                     <div class="form-group">
+
+                      <label for="competitors">Competitors</label>
+
+                      <input 
+                      [hidden]="hideCompetitorInput"
+                      #competitorInput
+                      value=''
+                      onfocus="this.value=''"
+                      (keyup)="competitorSearch(competitorInput.value)"
+                      id="competitors">
+                      
+                    </div>
+
+                    <div class="form-group">
                         <label for="proposedBidTeam">
                           Proposed Bid Team
                         </label>
@@ -540,8 +655,8 @@ class="svg-item">
                         onfocus="this.value=''"
                         (keyup)="findBidTeamUser(bidTeamInput.value)"
                         class="form-control transparent-input"
-                        placeholder="Invite your friends!"
                         type="text"
+                        placeholder="invite some friends !"
                         id="proposedBidTeam">
                         <div class="form-display">
                             <ul class="btn" [hidden]="bidTeamArray == null">
@@ -586,11 +701,11 @@ class="svg-item">
 
         class="p-2 bd-highlight">
           <button
-          [hidden]="(mainForm.invalid) || hideApprvlBtn || (approverLoggedIn)"
+          
           (click)="requestForApproval()"
           class="btmNavBtn"
           role="button">
-            Get Approved
+            Next Stage
           </button>
         </div>
 

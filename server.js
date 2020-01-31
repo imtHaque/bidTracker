@@ -79,6 +79,29 @@ app.get('/api/user/:userInput', cors(setCORS),
 
     });
 
+app.get('/api/getAccount/:userInput', cors(setCORS),
+(req, res) => {
+
+  const userInp = req.params.userInput;
+  const queryString = ('SELECT Id, Name FROM Account  WHERE Name LIKE \'%' + userInp + '%\' LIMIT 3');
+
+  org.query({
+        query: queryString},
+
+         // tslint:disable-next-line: no-shadowed-variable
+         (err, resp) => {
+
+        if (err) { throw err; }
+
+        if (resp.records && resp.records.length) {
+
+          res.send(resp.records);
+        }
+
+      });
+
+    });
+
 // GET single Form
 
 const setCORS2 = {
@@ -137,6 +160,7 @@ app.get('/api/getOpp/:id', cors(setCORS2),
   const queryString = `
       SELECT
        Id,
+       Account.Name,
        Name,
        Description,
        Share_Point_Link__c,
@@ -309,7 +333,8 @@ const fullFormId = req.params.id;
 const q =
 
 `SELECT
-Id
+Id,
+StageName
 FROM Opportunity WHERE ID = \'` + fullFormId + `\'`;
 
 org.query({
@@ -320,18 +345,37 @@ if (!err && resp.records) {
 
 const opt = resp.records[0];
 
-opt.set('Name', req.body.oppDetail.name);
-opt.set('Description', req.body.oppDetail.description);
-opt.set('Sales_Lead__c', req.body.oppDetail.salesLead.Id);
-opt.set('Share_Point_Link__c', req.body.oppDetail.sharePointLink);
-opt.set('Website__c', req.body.oppDetail.website);
-opt.set('Probability', (req.body.oppDetail.probability));
-opt.set('Amount', req.body.oppDetail.estimatedValue);
-opt.set('CloseDate', req.body.oppDetail.bidDeadline);
-opt.set('WBS_Code__c', req.body.oppDetail.wbsCode);
-opt.set('Cost__c', req.body.oppDetail.costs);
-opt.set('Effort_Days__c', req.body.oppDetail.effortDays);
-opt.set('send_for_approval__c', req.body.oppDetail.sendForApproval);
+
+if (opt._fields.stagename === 'Prospecting') {
+
+  opt.set('StageName', 'Qualification');
+
+} else if (opt._fields.stagename === 'Qualification') {
+
+opt.set('StageName', 'PQQ Prepartaion');
+
+} else if (opt._fields.stagename === 'PQQ Prepartaion') {
+
+opt.set('StageName', 'PQQ Submitted');
+
+} else if (opt._fields.stagename ===  'PQQ Submitted') {
+
+  opt.set('StageName', 'ITT Preparation');
+
+} else if (opt._fields.stagename === 'ITT Preparation') {
+
+opt.set('StageName', 'ITT Submitted');
+
+} else if (opt._fields.stagename === 'ITT Submitted') {
+
+opt.set('StageName', 'Presentation');
+
+} else if (opt._fields.stagename === 'Presentation') {
+
+opt.set('StageName', 'Awaiting Approval');
+
+}
+
 
 org.update({ sobject: opt},
   (err1) => {
@@ -592,7 +636,7 @@ app.options('/api/newEntry', cors(postCORS));
 app.post('/api/newEntry', cors(postCORS),
 
 (req, res) => {
-
+  const account = req.body.oppDetail.account;
   const name = req.body.oppDetail.name;
   const description = req.body.oppDetail.description;
   const shplink = req.body.oppDetail.sharePointLink;
@@ -630,7 +674,7 @@ app.post('/api/newEntry', cors(postCORS),
   }
 
   const opt = nforce.createSObject('Opportunity');
-
+  opt.set('AccountId', account)
   opt.set('Name', name);
   opt.set('Description', description);
   opt.set('Sales_Lead__c', salesLead);
@@ -685,6 +729,39 @@ app.post('/api/newEntry', cors(postCORS),
 
 });
 
+const postNewAccounts = {
+  origin: true,
+  methods: ['POST'],
+  credentials: true,
+  maxAge: 3600
+};
+
+app.options('/api/newAccount', cors(postNewAccounts));
+
+app.post('/api/newAccount', cors(postNewAccounts),
+
+(req,res)=>{
+
+const accName = req.body.accountName;
+const industry = req.body.industry;
+
+const accountObject =  nforce.createSObject('Account');
+
+accountObject.set('Name', accName);
+accountObject.set('Industry', industry);
+
+org.insert({ sobject: accountObject }, (err, resp) =>{
+
+  if(!err) {
+    const data = { Id: resp.id};
+    res.send(data);
+  }
+});
+
+
+});
+
+
 const postTaskCORS = {
   origin: true,
   methods: ['POST'],
@@ -699,7 +776,7 @@ app.options('/api/newTask', cors(postTaskCORS));
 app.post('/api/newTask', cors(postTaskCORS),
 
 (req, res) => {
-  console.log(req.body);
+
   const subject = req.body.subject;
   const dueDate = req.body.duedate;
   const relatedTo = req.body.relatedTo;

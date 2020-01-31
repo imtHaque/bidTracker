@@ -15,6 +15,7 @@ export class NewEntryComponent implements OnInit {
   currentJustify = 'justified';
 // form value array
 
+  industryArray = ['Banking', 'Healthcare', 'Transportation', 'Government']
   probabilityArray = [0.10, 0.30, 0.50, 0.70, 0.90];
   estimatedValueArray = [100000, 500000, 1000000 ];
 
@@ -25,9 +26,14 @@ export class NewEntryComponent implements OnInit {
   showUserList = false;
   showBidTeamUserSearchList = false;
   bidTeamArray = [];
+  showAccountList = false;
+  accounts = [];
+  hideAccountInput: boolean;
+  displaySelectedAccount;
 
+//modal
 
-
+addNewAccount = false;
 
   // form
    mainForm: FormGroup;
@@ -42,14 +48,21 @@ export class NewEntryComponent implements OnInit {
     this.mainForm = this.fb.group ({
 
       oppDetail: this.fb.group({
-
+        account: [''],
         name: ['', Validators.required],
         description: ['', Validators.required],
         salesLead: ['', Validators.required],
         sharePointLink: ['', Validators.required],
         website: ['', Validators.required],
         probability: [0.1, Validators.required],
-        estimatedValue: ['', Validators.required]
+        estimatedValue: ['', Validators.required],
+
+        newAccount: this.fb.group({
+
+          accountName : [''],
+          industry: ['']
+
+        })
       }),
 
         preBid: this.fb.group({
@@ -62,6 +75,36 @@ export class NewEntryComponent implements OnInit {
 
         })
       });
+  }
+
+  addNewAcc() {
+
+    this.addNewAccount = true;
+
+  }
+
+  AccountSearch(userInput?: string) {
+
+    if (userInput !== '') {
+
+      this.showAccountList = true;
+
+      this.nodeService.getAccount(userInput)
+      .subscribe (
+
+        (account: any) => {
+
+          this.accounts = account;
+        }
+
+        );
+
+    } else {
+
+      this.showAccountList = false;
+      return null;
+
+    }
   }
 
   SLSearch(userInput?: string) {
@@ -93,9 +136,25 @@ export class NewEntryComponent implements OnInit {
     this.hideInput = true;
   }
 
+  selectedAccount( id: string, name:string) {
+
+    this.mainForm.get('oppDetail').get('account').setValue(id);
+    this.displaySelectedAccount = name;
+    this.showAccountList = false;
+    this.hideAccountInput = true;
+    
+  }
+
   onUserDelete() {
     this.mainForm.get('oppDetail').get('salesLead').setValue('');
     this.hideInput = false;
+  }
+
+  onAccountDelete() {
+
+    this.mainForm.get('oppDetail').get('account').setValue('');
+    this.hideAccountInput = false;
+
   }
 
   findBidTeamUser(userInput: string) {
@@ -142,6 +201,23 @@ export class NewEntryComponent implements OnInit {
 
     this.router.navigate(['/ng/homePage']);
     this.nodeService.toastFire(true, 'Saved !');
+  }
+
+  saveAccount() {
+    console.log(this.mainForm.get('oppDetail').get('newAccount').value);
+    this.nodeService.addNewAccount(this.mainForm.get('oppDetail').get('newAccount').value)
+    .subscribe(
+
+      data => {
+        this.mainForm.get('oppDetail').get('account').setValue(data.Id);
+        this.displaySelectedAccount = this.mainForm.get('oppDetail').get('newAccount').get('accountName').value;
+        this.showAccountList = false;
+        this.hideAccountInput = true;
+        console.log(this.mainForm.get('oppDetail').get('account').value);
+      },
+       error => console.log('error ', error)
+ 
+     );;
   }
 
 }

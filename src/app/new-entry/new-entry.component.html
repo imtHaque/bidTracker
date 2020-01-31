@@ -11,6 +11,118 @@
 
                   <div class="form-group">
 
+                    <label for="name">Account</label>
+                    <input
+                    [hidden]="hideAccountInput"
+                    onfocus="this.value=''"
+                    #accountSearch
+                    value=''
+                    (keyup)="AccountSearch(accountSearch.value)"
+                    type="text"
+                    class="form-control transparent-input"
+                    id="accountSearch"
+                    placeholder="Company">
+
+                    <div
+                    [hidden]="!hideAccountInput">
+                    <ul class="btn">
+                      <li class="btn btn-primary-outline">
+                        {{displaySelectedAccount}}
+                      </li>
+
+                      <div class="btn"></div>
+                      <span>
+                      <img src="../../assets/icons8-delete-64.png" 
+                      (click)="onAccountDelete()"
+                      class="deleteUserSelection flaot-right">
+                    </span>
+                    </ul>
+                    </div>
+                    <div
+                    [hidden]="!showAccountList">
+
+                    <ul class="list-group"
+                        id="accountSearch"
+                        class="btn btn-outline accSearchUlList">
+
+                        <li
+                        (click)="selectedAccount(acc.id, acc.name)"
+                        class="list-group-item list-group-item-action list-group-item-secondary accSearchList"
+                              *ngFor="let acc of accounts">
+                              {{acc.name}}
+                              </li>
+
+                        <li 
+                        (click)="addNewAcc()"
+                        class="addAccList">
+                          <div class="plus radius" style="--l:35px;--t:3px;--c2:green">
+                  
+                          </div>
+                          <div  
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                          class="addAccTxt">Add Account
+                        </div>
+                        </li>
+                    </ul>
+                    </div>
+                  </div>
+                   
+                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Add New Account</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+
+                              <div formGroupName="newAccount">
+
+                                <div class="form-group">
+
+                                  <label 
+                                  for="accountName">Account Name</label>
+
+                                  <input
+                                  class="form-control"
+                                  formControlName="accountName"
+                                  type="text">
+
+                                </div>
+
+                                  <div class="form-group">
+                                    <label for="industry">Industry</label>
+                                    <br>
+                                    <select
+                                    id="industry"
+                                    formControlName="industry"
+                                    class="btn btn-outline-primary">
+                                      <option
+                                      [value]="indstry"
+                                      *ngFor="let indstry of industryArray">
+                                      {{indstry}}
+                                    </option>
+                                  </select>
+
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button (click)="saveAccount()" type="button" class="btn btn-primary">Save</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+      
+
+                  <div class="form-group">
+
                     <label for="name">Project Name</label>
                     <input
                     formControlName="name"
@@ -26,9 +138,8 @@
                     <textarea
                     formControlName="description"
                     type="text"
-                    class="form-control transparent-input"
-                    id="description"
-                    placeholder="Short Description"></textarea>
+                    class="form-control transparent-input description"
+                    id="description"></textarea>
                 </div>
 
 
@@ -44,6 +155,7 @@
                     class="form-control transparent-input"
                     id="saleslead"
                     placeholder="Pioneer">
+
                     <div
                     [hidden]="!hideInput">
                     <ul class="btn">
@@ -132,7 +244,7 @@
     </div>
   </ngb-tab>
   <!-- [disabled]="!mainForm.get('oppDetail').valid" -->
-  <ngb-tab title="Pre Bid Information" [disabled]="!mainForm.get('oppDetail').valid" id="preBid">
+  <ngb-tab title="Pre Bid Information" id="preBid">
     <div class="container">
     <ng-template ngbTabContent>
       <div formGroupName="preBid">

@@ -8,12 +8,24 @@
   padding: 10px;
 }
 label{
-  color: rgb(0, 0, 0);
+  font-size: 18px;
+  font-weight: bold;
+  color: #0066A1;
 }
 input.transparent-input{
   color: rgb(10, 10, 10);
   background-color:transparent !important;
-  border: 0 !important;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: solid grey 1px ;
+  transition: 0.1s;
+}
+
+input:focus {
+  outline: none !important;
+  box-shadow:none !important;
+  border-bottom: solid #0066A1 2px;
 }
 
 .modal-content {
@@ -23,13 +35,30 @@ input.transparent-input{
 textarea.transparent-input{
   color: rgb(7, 7, 7);
   background-color:transparent !important;
-  border: 0 !important;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: solid grey 1px ;
+  transition: ease-in 0.1s;
 }
+
+
+textarea:focus {
+  outline: none !important;
+  box-shadow:none !important;
+  border-bottom: solid #0066A1 2px;
+
+}
+
+.descForm {
+  height: 100px;
+}
+
 .btn-primary-outline {
   background-color: transparent;
   border-color: rgba(12, 95, 172, 0.74);
   color: rgb(5, 5, 5);
-  margin: 3px;
+  padding: 5px;
 }
 
 .save_button {
@@ -113,6 +142,7 @@ ul {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 1), 0 4px 14px rgba(0, 0, 0, 0.7);
   background-color: #ddd;
   font-size: 14px;
+  cursor: pointer;
 }
 .breadcrumb a {
   position: relative;
@@ -158,13 +188,18 @@ ul {
   font-weight: bold;
 }
 
-.breadcrumb a.active, .breadcrumb a:hover {
+.breadcrumb a.active {
   background: #0066A1;
   color: white;
 }
-.breadcrumb a.active:after, .breadcrumb a:hover:after {
+.breadcrumb a.active:after {
   background: #0066A1;
   color: white;
+}
+
+.breadcrumb a:hover, .breadcrumb a:hover:after {
+  background: white;
+  color: black;
 }
 
 .breadcrumb-active {
@@ -194,6 +229,7 @@ ul {
 #estimatedValue {
   color: rgb(7, 7, 7);
   display: inline-block;
+  margin-bottom: 80px;
 }
 #estimatedValue:hover {
   cursor: pointer;
@@ -253,6 +289,14 @@ ul {
 .overview {
   color: rgb(7, 7, 7);
   font-size: 30px;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.accName {
+  color: rgb(7, 7, 7);
+  font-size: 15px;
   text-align: center;
   margin-bottom: 50px;
   margin-top: 50px;
@@ -354,6 +398,7 @@ ul {
 }
 .taskComment {
   color: rgb(7, 7, 7);
+  height: 100px !important;
 }
 
 .taskDueDate {
@@ -420,6 +465,18 @@ h2 {
   animation: donut1 3s;
 }
 
+.donut-segment-q {
+  stroke: #0089C4 ;
+  animation: donutqual 3s;
+}
+
+.donut-segment-pp {
+
+  stroke: #0089C4 ;
+  animation: donutpp 3s;
+
+}
+
 .donut-segment-3 {
   stroke: #FA6119 ;
   animation: donut2 3s;
@@ -434,6 +491,32 @@ h2 {
   animation: donut3 3s;
 }
 
+.donut-segment-ps {
+
+  stroke: #FA6119;
+  animation: donutps 3s;
+
+}
+
+.donut-segment-ip {
+
+  stroke: #FA6119;
+  animation: donutip 3s;
+}
+
+.donut-segment-is {
+
+  stroke: #FA6119;
+  animation: donutis 3s;
+
+}
+
+.donut-segment-pres {
+
+  stroke: #FA6119;
+  animation: donutpres 3s;
+
+}
 .segment-1{fill:#ccc;}
 
 
@@ -446,12 +529,67 @@ h2 {
   }
 }
 
+
 @keyframes donut1 {
   0% {
       stroke-dasharray: 0, 100;
   }
   100% {
-      stroke-dasharray: 30, 70;
+      stroke-dasharray: 5, 95;
+  }
+}
+
+@keyframes donutqual {
+  0% {
+      stroke-dasharray: 0, 100;
+  }
+  100% {
+      stroke-dasharray: 15, 85;
+  }
+}
+
+@keyframes donutpp {
+  0% {
+      stroke-dasharray: 0, 100;
+  }
+  100% {
+      stroke-dasharray: 25, 75;
+  }
+}
+
+@keyframes donutps {
+  0% {
+      stroke-dasharray: 0, 100;
+  }
+  100% {
+      stroke-dasharray: 35, 65;
+  }
+}
+
+@keyframes donutip {
+  0% {
+      stroke-dasharray: 0, 100;
+  }
+  100% {
+      stroke-dasharray: 45, 55;
+  }
+}
+
+@keyframes donutis {
+  0% {
+      stroke-dasharray: 0, 100;
+  }
+  100% {
+      stroke-dasharray: 55, 45;
+  }
+}
+
+@keyframes donutpres {
+  0% {
+      stroke-dasharray: 0, 100;
+  }
+  100% {
+      stroke-dasharray: 65, 35;
   }
 }
 
@@ -460,7 +598,7 @@ h2 {
       stroke-dasharray: 0, 100;
   }
   100% {
-      stroke-dasharray: 60, 40;
+      stroke-dasharray: 85, 15;
   }
 }
 
@@ -498,7 +636,7 @@ h2 {
 }
 
 .scnd-container {
-  margin-bottom: 10%;
+  margin-top: 5px;
 }
 .d-flex {
   width: 100%;

@@ -8,6 +8,10 @@
   font-family: 'stagSansLight';
 }
 
+*{
+  padding: 0;
+}
+
 h3 {
   margin-bottom: 20px;
   font-family: 'stagLight';
@@ -28,7 +32,6 @@ input.transparent-input{
 textarea.transparent-input{
   color: black;
   background-color:transparent !important;
-  border: 0 !important;
   font-family: 'stagSansLight';
 }
 .btn-primary-outline {
@@ -141,11 +144,100 @@ color: rgba(52,58,64,1);
 background: rgba(52,58,64,1);
 }
 
+.accSearchUlList {
+  margin-top: 5px;
+  min-width: 100%;
+  list-style: none;
+  font-size: auto;
+}
+
+.accSearchList {
+  max-width: 220px;
+  background: white;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.accSearchList:hover {
+
+background: #0066A1;
+color: white;
+
+}
+
+.description {
+
+height: 140px;
+border: 1px solid black !important;
+
+}
+
 @media screen and (max-width: 360px) {
 
   :host ::ng-deep .tabselection a.nav-link {
     height: 45px;
     font-size: 10px;
   }
+
+}
+.addAccList {
+  cursor: pointer;
+}
+
+.plus {
+  --t:2px;   /* Thickness */
+  --l:40px;  /* size of the symbol */
+  --s:10px;  /* space around the symbol */
+  --c1:#fff; /* Plus color*/
+  --c2:#000; /* background color*/
+
+  display:inline-block;
+  width:var(--l);
+  height:var(--l);
+  padding:var(--s);
+  box-sizing:border-box; /*Remove this if you don't want space to be included in the size*/
+  
+  background:
+    linear-gradient(var(--c1),var(--c1)) content-box,
+    linear-gradient(var(--c1),var(--c1)) content-box,
+    var(--c2);
+  background-position:center;
+  background-size: 100% var(--t),var(--t) 100%;
+  background-repeat:no-repeat;
+  margin-top: 5px;
+  float: left;
+}
+
+.radius {
+  border-radius:50%;
+}
+
+.addAccTxt{
+  margin-left: 10px;
+  margin-top: 13px;
+  float: left;
+}
+
+.modal-title, .modal-body {
+
+  margin-top: 15px;
+  margin-left: 5px;
+}
+
+.modal-dialog{
+
+  margin-top: 10%;
+}
+
+.modal-content{
+  padding: 5px;
+  min-height: 400px;
+}
+#exampleModal > div > div > div.modal-body > div > div > input {
+
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #0066A1;
 
 }

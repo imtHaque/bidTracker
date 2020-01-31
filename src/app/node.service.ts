@@ -31,6 +31,11 @@ getAllTask() {
   return this.http.get<any>(this.url + '/api/getAllTask');
 }
 
+addNewAccount(accountObj) {
+
+  return this.http.post<any>(this.url + '/api/newAccount', accountObj);
+}
+
   toastFire(fire, message) {
     this.fireToast.next({fireMsg: fire, toastMsg: message});
   }
@@ -38,6 +43,10 @@ getAllTask() {
 
   postBid(formToSubmit) {
     return this.http.post<any>(this.url + '/api/newEntry', formToSubmit);
+  }
+
+  getAccount(userInput: string) {
+    return this.http.get<any>(this.url + '/api/getAccount/' + userInput)
   }
 
   getUser(userInput: string) {

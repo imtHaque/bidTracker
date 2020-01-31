@@ -38,9 +38,81 @@
                   class="breadcrumb__title">Prospecting</span>
                 </span>
               </a>
+
               <a
-              [ngClass]="{'active' : holdBreadCrumbVar >= 2}"
-              (click)="sortOpps('Awaiting Approval', 2)">
+              [ngClass]="{'active' : holdBreadCrumbVar >= 2 }"
+              (click)="sortOpps('Qualification', 2)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">Qualification</span>
+                </span>
+              </a>
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 3 }"
+              (click)="sortOpps('PQQ Prepartaion', 3)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">PQQ Preparation</span>
+                </span>
+              </a>
+
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 4 }"
+              (click)="sortOpps('PQQ Submitted', 4)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">PQQ Submitted</span>
+                </span>
+              </a>
+
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 5 }"
+              (click)="sortOpps('ITT Preparation', 5)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">ITT Preparation</span>
+                </span>
+              </a>
+
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 6 }"
+              (click)="sortOpps('ITT Submitted', 6)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">ITT Submitted</span>
+                </span>
+              </a>
+
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 7 }"
+              (click)="sortOpps('Presentation', 7)">
+                <span
+
+                class="breadcrumb__inner">
+                  <span
+
+                  class="breadcrumb__title">Presentation</span>
+                </span>
+              </a>
+              
+              <a
+              [ngClass]="{'active' : holdBreadCrumbVar >= 8}"
+              (click)="sortOpps('Awaiting Award', 8)">
                 <span
 
                 class="breadcrumb__inner">
@@ -50,8 +122,8 @@
                 </span>
               </a>
               <a
-              [ngClass]="{'active' : holdBreadCrumbVar >= 3}"
-              (click)="sortOpps('Closed Lost', 3)">
+              [ngClass]="{'active' : holdBreadCrumbVar >= 9}"
+              (click)="sortOpps('Closed Lost', 9)">
                 <span
 
                 class="breadcrumb__inner">
@@ -61,13 +133,12 @@
                 </span>
               </a>
               <a
-              [ngClass]="{'active' : holdBreadCrumbVar >= 4}"
-              (click)="sortOpps('Closed Won', 4)">
+              [ngClass]="{'active' : holdBreadCrumbVar >= 10}"
+              (click)="sortOpps('Closed Won', 10)">
                 <span
 
                 class="breadcrumb__inner">
                   <span
-
                   class="breadcrumb__title">Closed Won</span>
                 </span>
               </a>
@@ -135,7 +206,7 @@
 
             <div class="card-text description">
                 Description
-            <p>{{opp.description}}</p>
+            <p>{{ (opp.description != null && opp.description.length > 240)? (opp.description | slice:0:240) + '  . . .': (opp.description)}}</p>
 
           </div>
 
