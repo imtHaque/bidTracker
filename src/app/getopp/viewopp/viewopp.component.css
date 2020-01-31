@@ -111,6 +111,11 @@ ul {
   padding: 0;
 }
 
+.lasttab {
+
+  margin-bottom: 300px;
+}
+
 @media screen and (max-width: 480px) {
 
   .container1 {
@@ -410,14 +415,13 @@ h2 {
 }
 
 .addTaskBtn {
-  max-width: 70px;
+  min-width: 70px;
   background: #0066A1;
   border: 0px;
   color: rgb(255, 255, 255);
   margin-bottom: 10px;
   border-radius: 5px;
-  padding-left: 2px;
-  padding-right: 2px;
+  padding: 5px;
 }
 .addTaskBtn:hover {
   background: white;

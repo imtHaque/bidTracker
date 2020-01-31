@@ -190,24 +190,6 @@ class="svg-item">
 </div>
 <!-- donut -->
 
-
-<div [hidden]="sleadLoggedIn" class="manager-only">
-    <h5>Risk Indicator</h5>
-
-    <div class="risk-renderer">
-        <div *ngIf="0.33 > loseprobability">
-            Low Risk: {{loseprobability * 100 | number: '1.0-0'}} %
-          </div>
-          <div *ngIf="(0.66 >= loseprobability) && (loseprobability >= 0.33)">
-              Medium Risk: {{loseprobability * 100 | number: '1.0-0'}} %
-            </div>
-            <div *ngIf=" loseprobability > 0.66">
-                Caution: {{loseprobability * 100 | number: '1.0-0'}} %
-              </div>
-    </div>
-
-
-
 <div class="progress">
 <div class="progress-bar" id="low-risk"
 [ngStyle]="{
@@ -444,7 +426,7 @@ type="button" class="btn btn-primary addTaskBtn" data-toggle="modal" data-target
 
 
         <div class="form-group">
-          <label for="name">Project Name</label>
+          <label for="name">Opportunity Name</label>
           <input
           formControlName="name"
           type="text"
@@ -506,23 +488,92 @@ type="button" class="btn btn-primary addTaskBtn" data-toggle="modal" data-target
 
       <div class="form-group">
 
+        <label for="clientLead">Client Lead</label>
+        <input
+        [hidden]="hideClientLeadInput"
+        #clientLead
+        onfocus="this.value=''"
+        value=''
+        (keyup)="CLSearch(clientLead.value)"
+        type="text"
+        class="form-control transparent-input"
+        id="clientLead">
+        <div [hidden]="!hideClientLeadInput">
+        <ul class="btn">
+          <li class="btn btn-primary-outline">
+            {{clientLeadHold?.Name}}
+          </li>
+          <div class="btn"></div>
+          <span>
+            <img src="../../assets/icons8-delete-64.png"
+            (click)="onClientDelete()"
+            class="deleteUserSelection flaot-right">
+          </span>
+        </ul>
+        </div>
+        <div [hidden]="!showClientList">
+          <ul class="list-group justified"
+                id="clientLead"
+                class="btn btn-outline">
+                  <li
+                  (click)="selectedClient(user.id, user.name)"
+                  class="list-group-item list-group-item-action list-group-item-secondary"
+                  *ngFor="let user of clientArray">
+                  {{user.name}}
+                  </li>
+              </ul>
+        </div>
+
+    </div>
+
+      <div class="form-group">
+        <label for="proposedBidTeam">
+          Proposed Bid Team
+        </label>
+
+        <input
+        [hidden]="disableInput"
+        #bidTeamInput
+        value=''
+        onfocus="this.value=''"
+        (keyup)="findBidTeamUser(bidTeamInput.value)"
+        class="form-control transparent-input"
+        type="text"
+        id="proposedBidTeam">
+        <div class="form-display">
+            <ul class="btn" [hidden]="bidTeamArray == null">
+                <li
+                *ngFor="let bidTeam of bidTeamArray; let i = index"
+                class="btn btn-primary-outline float-left">
+                  {{bidTeam.User__r?.Name}}
+                  <a [ngStyle]="{
+                    'color': 'rgb(237, 83, 88)',
+                    'cursor': 'pointer'
+                  }"
+                  class="row-sm-4" (click)="bidTeamDelete(i)">X</a>
+                </li>
+              </ul>
+        </div>
+
+        <ul [hidden]="!showBidTeamUserSearchList" class="btn btn-outline">
+          <li
+          class="list-group-item list-group-item-action list-group-item-secondary"
+          *ngFor="let user of users"
+          (click)="bidTeamUserSelection(user.name, user.id)">
+            {{user.name}}
+          </li>
+        </ul>
+
+        </div>
+
+      <div class="form-group">
+
           <label for="sharePointLink">Share Point Link</label>
           <input
           formControlName="sharePointLink"
           type="text"
           class="form-control transparent-input"
           id="sharePointLink">
-
-      </div>
-
-      <div class="form-group">
-
-          <label for="website">Website</label>
-          <input
-          formControlName="website"
-          type="text"
-          class="form-control transparent-input"
-          id="website">
 
       </div>
 
@@ -557,26 +608,11 @@ type="button" class="btn btn-primary addTaskBtn" data-toggle="modal" data-target
 
       <div class="form-group">
         <label for="estimatedValue">Estimated Value</label>
-        <br>
-        <div
-        id = "estimatedValue"
-        class="btn"
-        [hidden]="showEsTValueList"
-        (click)="onEstClick()">
-        {{estimatedValue | currency:'GBP'}}
-      </div>
-            <div
-            [hidden]="!showEsTValueList"
-            type= currency
-            *ngFor="let estV of estimatedValueArray">
-              <li
-              id = "estVList"
-              class="btn"
-              (click)="onEstSelect(estV)">
-                {{estV | currency:'GBP'}}
-              </li>
-
-            </div>
+        <input
+        formControlName="estimatedValue"
+        type="number"
+        class="form-control transparent-input"
+        id="estimatedValue">
     </div>
 
            </ng-template>
@@ -584,11 +620,12 @@ type="button" class="btn btn-primary addTaskBtn" data-toggle="modal" data-target
         </ngb-tab>
 
         <ngb-tab title="Pre Bid Information" id="preBid"
-        [disabled]="(mainForm.get('oppDetail').get('name').invalid ||
-        mainForm.get('oppDetail').get('description').invalid ||
-        mainForm.get('oppDetail').get('sharePointLink').invalid ||
-        mainForm.get('oppDetail').get('website').invalid ||
-        mainForm.get('oppDetail').get('estimatedValue').invalid)">
+       >
+       <!-- [disabled]="(mainForm.get('oppDetail').get('name').invalid ||
+       mainForm.get('oppDetail').get('description').invalid ||
+       mainForm.get('oppDetail').get('sharePointLink').invalid ||
+       mainForm.get('oppDetail').get('website').invalid ||
+       mainForm.get('oppDetail').get('estimatedValue').invalid)" -->
 
             <div class="container">
             <ng-template ngbTabContent>
@@ -630,61 +667,17 @@ type="button" class="btn btn-primary addTaskBtn" data-toggle="modal" data-target
                     </div>
 
                     <div class="form-group">
-
-                      <label for="competitors">Competitors</label>
-
-                      <input 
-                      [hidden]="hideCompetitorInput"
-                      #competitorInput
-                      value=''
-                      onfocus="this.value=''"
-                      (keyup)="competitorSearch(competitorInput.value)"
-                      id="competitors">
+                      <label for="contractLength">Contract Length</label>
+                      <input
+                      formControlName="contractLength"
+                      type="number"
+                      class="form-control transparent-input"
+                      id="contractLength">
+                  </div>
                       
                     </div>
 
-                    <div class="form-group">
-                        <label for="proposedBidTeam">
-                          Proposed Bid Team
-                        </label>
-
-                        <input
-                        [hidden]="disableInput"
-                        #bidTeamInput
-                        value=''
-                        onfocus="this.value=''"
-                        (keyup)="findBidTeamUser(bidTeamInput.value)"
-                        class="form-control transparent-input"
-                        type="text"
-                        placeholder="invite some friends !"
-                        id="proposedBidTeam">
-                        <div class="form-display">
-                            <ul class="btn" [hidden]="bidTeamArray == null">
-                                <li
-                                *ngFor="let bidTeam of bidTeamArray; let i = index"
-                                class="btn btn-primary-outline float-left">
-                                  {{bidTeam.User__r?.Name}}
-                                  <a [ngStyle]="{
-                                    'color': 'rgb(237, 83, 88)',
-                                    'cursor': 'pointer'
-                                  }"
-                                  class="row-sm-4" (click)="bidTeamDelete(i)">X</a>
-                                </li>
-                              </ul>
-                        </div>
-
-
-
-                          <hr>
-                        <ul [hidden]="!showBidTeamUserSearchList" class="btn btn-outline">
-                          <li
-                          class="list-group-item list-group-item-action list-group-item-secondary"
-                          *ngFor="let user of users"
-                          (click)="bidTeamUserSelection(user.name, user.id)">
-                            {{user.name}}
-                          </li>
-                        </ul>
-                        </div>
+                   
             </ng-template>
           </div>
         </ngb-tab>

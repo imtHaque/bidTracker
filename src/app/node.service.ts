@@ -24,7 +24,7 @@ export class NodeService {
     {username: 'approver', password: '123', position: 'approver'}
         ];
 
-        url = '';
+        url = 'http://localhost:3000';
 
 
 getAllTask() {
@@ -53,6 +53,11 @@ addNewAccount(accountObj) {
     return this.http.get<User[]>(this.url + '/api/user/' + userInput);
   }
 
+  getCompetitor(input: string) {
+
+    return this.http.get<any>(this.url + '/api/competitor/' + input);
+  }
+
   getOpp() {
     return this.http.get<any>(this.url + '/api/getOpp');
   }
@@ -77,8 +82,16 @@ addNewAccount(accountObj) {
     return this.http.delete<any>(this.url + '/api/delOpp/' + id);
   }
 
+  deleteComp(id: string) {
+    return this.http.delete<any>(this.url + '/api/delComp/' + id);
+  }
+
   addBidTeam(updateForm, id: string) {
     return this.http.post<any>(this.url + '/api/addTeam/' + id, updateForm);
+  }
+
+  addCompetitor(updateForm, id: string) {
+    return this.http.post<any>(this.url + '/api/addCompetitor/' + id, updateForm);
   }
 
   requestApproval(updateForm, id: string) {

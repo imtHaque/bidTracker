@@ -12,10 +12,6 @@ import { User } from 'src/app/shared/user.model';
 })
 export class ViewoppComponent implements OnInit, OnDestroy {
 
-  // win probability
-
- loseprobability: number;
-
 // store stagename
 
 stageName: string;
@@ -54,18 +50,25 @@ hideInput: boolean;
 displaySelectedUser;
 showUserList = false;
 
+// Client Lead logic
+
+hideClientLeadInput: boolean;
+showClientList: boolean;
+clientArray = [];
+clientLeadHold;
+
 // Form init
  name: string;
  accountName: string;
  description: string;
  sharePointLink: string;
  website: string;
- probabilityArray: number[] = [10, 30, 50, 70, 90];
+ probabilityArray: number[] = [10, 30, 50, 70, 90, 100];
  probability: number;
- estimatedValueArray = [100000, 500000, 1000000];
- estimatedValue = 0;
+ estimatedValue: number;
  wbsCode;
  bidDeadline;
+ contractLength;
  costs;
  effortDays;
  salesLeadHold;
@@ -95,10 +98,6 @@ fm;
  hideTaskUserListInput: boolean;
  breadCrumbVar = 1;
 
- //competitors
-
- hideCompetitorInput: boolean;
-
 
 
 mainForm: FormGroup;
@@ -124,7 +123,6 @@ mainForm: FormGroup;
         name: [this.name, Validators.required],
         description: [this.description, Validators.required],
         sharePointLink: [this.sharePointLink, Validators.required],
-        website: [this.website, Validators.required],
         probability: [this.probability, Validators.required],
         estimatedValue: [this.estimatedValue, Validators.required],
         wbsCode: [this.wbsCode, Validators.required],
@@ -133,6 +131,8 @@ mainForm: FormGroup;
         effortDays: [this.effortDays, Validators.required],
         bidTeam: [this.bidTeamArray, Validators.required],
         salesLead: [this.salesLeadHold, Validators.required],
+        clientLead: [this.clientLeadHold, Validators.required],
+        contractLength: [this.contractLength, Validators.required],
         sendForApproval: [this.sendForApproval]
       })
     });
@@ -151,15 +151,14 @@ mainForm: FormGroup;
       if (this.nodeService.opp.length > 0) {
         this.loadedFromMemory = true;
         console.log('executed from memory');
+        
         let i: number;
         for (i = 0; i < this.nodeService.opp.length; i++) {
         if (this.nodeService.opp[i].id === routeParams.id ) {
 
-          console.log(this.nodeService.opp[i]);
-
           this.stageName = this.nodeService.opp[i].stagename;
           this.bidName = this.nodeService.opp[i].name;
-
+          console.log(this.nodeService.opp[i]);
           if ((this.nodeService.opp[i].account)) {
             
           this.accountName = this.nodeService.opp[i].account.Name;
@@ -170,6 +169,9 @@ mainForm: FormGroup;
           if (this.nodeService.opp[i].amount != null) {
                   this.estimatedValue = (this.nodeService.opp[i].amount);
                   }
+          if (this.nodeService.opp[i].contract_length__c != null) {
+                    this.contractLength = (this.nodeService.opp[i].contract_length__c);
+                    }
           if (!(this.nodeService.opp[i].oppotunity_teams__r)) {
                   this.bidTeamArray = [];
                   this.hasBidArrayChanged = [];
@@ -185,6 +187,14 @@ mainForm: FormGroup;
                   this.hideInput = true;
                   this.salesLeadHold = this.nodeService.opp[i].sales_lead__r;
                 }
+          
+          if (!(this.nodeService.opp[i].client_leader__r)) {
+                  this.hideClientLeadInput = false;
+                  this.clientLeadHold = {Id: ''};
+                } else {
+                  this.hideClientLeadInput = true;
+                  this.clientLeadHold = this.nodeService.opp[i].client_leader__r;
+                }
 
           if (
                   (!(this.nodeService.opp[i].stagename === 'Prospecting'))
@@ -197,14 +207,7 @@ mainForm: FormGroup;
 
                     this.hideAccRejectBtn = true;
                 }
-          if (this.salesLeadHold.Id !== '') {
-                  this.nodeService.getLoseProbability(this.nodeService.opp[i].sales_lead__r.Id).
-                  subscribe(
-                    data => {
-                      this.loseprobability = data.loseprobability;
-                    }
-                  );
-                }
+        
           let x: number;
           if (this.nodeService.taskArr !== null && this.nodeService.taskArr.length > 0) {
           for (x = 0; x < this.nodeService.taskArr.length; x++) {
@@ -241,11 +244,12 @@ mainForm: FormGroup;
 
 
       console.log('executed from API');
-      console.log(this.nodeService.opp.length);
       this.nodeService.getSingleOpp(routeParams.id)
                 .subscribe(
                   
                 singleOpp => {
+
+                  console.log(singleOpp[0]);
                   this.stageName = singleOpp[0].stagename;
                   this.bidName = singleOpp[0].name;
 
@@ -253,12 +257,16 @@ mainForm: FormGroup;
                     this.accountName = singleOpp[0].account.Name;
                   }
                   
-                  console.log(singleOpp[0]);
                   this.formId = singleOpp[0].id;
                   this.probability = (singleOpp[0].probability);
                   if (singleOpp[0].amount != null) {
                   this.estimatedValue = (singleOpp[0].amount);
                   }
+
+                  if (singleOpp[0].contract_length__c != null) {
+                    this.contractLength = (singleOpp[0].contract_length__c);
+                    }
+
                   if (!(singleOpp[0].oppotunity_teams__r)) {
                   this.bidTeamArray = [];
                   this.hasBidArrayChanged = [];
@@ -275,6 +283,14 @@ mainForm: FormGroup;
                   this.salesLeadHold = singleOpp[0].sales_lead__r;
                 }
 
+                if (!(singleOpp[0].client_leader__r)) {
+                  this.hideClientLeadInput = false;
+                  this.clientLeadHold = {Id: ''};
+                } else {
+                  this.hideClientLeadInput = true;
+                  this.clientLeadHold = singleOpp[0].client_leader__r;
+                }
+
                   if (
                   (!(singleOpp[0].stagename === 'Prospecting'))
                   ) {
@@ -286,14 +302,7 @@ mainForm: FormGroup;
 
                     this.hideAccRejectBtn = true;
                 }
-                  if (this.salesLeadHold.Id !== '') {
-                  this.nodeService.getLoseProbability(singleOpp[0].sales_lead__r.Id).
-                  subscribe(
-                    data => {
-                      this.loseprobability = data.loseprobability;
-                    }
-                  );
-                }
+               
 
                   this.nodeService.getAllTask().subscribe(
                   data => {
@@ -348,7 +357,6 @@ mainForm: FormGroup;
         name: this.fm.name,
         description: this.fm.description,
         sharePointLink: this.fm.share_point_link__c,
-        website: this.fm.website__c,
         probability: (this.fm.probability),
         estimatedValue: this.fm.amount,
         wbsCode: this.fm.wbs_code__c,
@@ -356,7 +364,9 @@ mainForm: FormGroup;
         costs: this.fm.cost__c,
         effortDays: this.fm.effort_days__c,
         bidTeam: this.bidTeamArray,
-        salesLead: this.salesLeadHold
+        salesLead: this.salesLeadHold,
+        clientLead: this.clientLeadHold,
+        contractLength: this.contractLength
       })
       });
 
@@ -365,7 +375,6 @@ mainForm: FormGroup;
       this.mainForm.get('oppDetail').get('name').disable();
       this.mainForm.get('oppDetail').get('description').disable();
       this.mainForm.get('oppDetail').get('sharePointLink').disable();
-      this.mainForm.get('oppDetail').get('website').disable();
       this.mainForm.get('oppDetail').get('wbsCode').disable();
       this.mainForm.get('oppDetail').get('bidDeadline').disable();
       this.mainForm.get('oppDetail').get('costs').disable();
@@ -394,11 +403,6 @@ mainForm: FormGroup;
     console.log(this.mainForm.value);
   }
 
-  competitorSearch(input) {
-
-
-  }
-
   SLSearch(userInput?: string) {
 
     if (userInput !== '') {
@@ -415,6 +419,27 @@ mainForm: FormGroup;
       });
     } else {
       this.showUserList = false;
+      return null;
+
+    }
+  }
+
+  CLSearch(userInput?: string) {
+
+    if (userInput !== '') {
+
+      this.showClientList = true;
+
+      this.nodeService.getUser(userInput)
+    .subscribe(
+
+      (sfUsers: any) => {
+
+        this.clientArray = sfUsers;
+
+      });
+    } else {
+      this.showClientList = false;
       return null;
 
     }
@@ -486,10 +511,28 @@ mainForm: FormGroup;
     this.hideInput = true;
   }
 
+  selectedClient(Id: string, Name: string) {
+
+    this.mainForm.get('oppDetail').get('clientLead').setValue({Id, Name});
+    this.clientLeadHold = {Id, Name};
+    this.showClientList = false;
+    this.hideClientLeadInput = true;
+
+  }
+
   onUserDelete() {
     if (!this.disableInput) {
     this.mainForm.get('oppDetail').get('salesLead').setValue({Id: ''});
     this.hideInput = false;
+    }
+  }
+
+  onClientDelete() {
+
+    if(!this.disableInput) {
+
+      this.mainForm.get('oppDetail').get('clientLead').setValue({Id: ''});
+      this.hideClientLeadInput = false;
     }
   }
 
@@ -519,17 +562,17 @@ mainForm: FormGroup;
     this.mainForm.get('oppDetail').get('probability').setValue(prob);
   }
 
-  onEstClick() {
-    if (!this.disableInput) {
-    this.showEsTValueList = !this.showEsTValueList;
-    }
-  }
+  // onEstClick() {
+  //   if (!this.disableInput) {
+  //   this.showEsTValueList = !this.showEsTValueList;
+  //   }
+  // }
 
-  onEstSelect(estV) {
-    this.estimatedValue = estV;
-    this.showEsTValueList = !this.showEsTValueList;
-    this.mainForm.get('oppDetail').get('estimatedValue').setValue(estV);
-  }
+  // onEstSelect(estV) {
+  //   this.estimatedValue = estV;
+  //   this.showEsTValueList = !this.showEsTValueList;
+  //   this.mainForm.get('oppDetail').get('estimatedValue').setValue(estV);
+  // }
 
   deleteTeam() {
      if (!(this.hasBidArrayChanged[0]) && (this.bidTeamArray[0])) {
@@ -554,9 +597,8 @@ mainForm: FormGroup;
       return null;
       }
 
-
       save() {
-
+        
         this.nodeService.updateOpp(this.mainForm.value, this.formId)
         .subscribe(
           () => {this.deleteTeam();
@@ -613,55 +655,13 @@ mainForm: FormGroup;
         this.showTaskForm = !this.showTaskForm;
       }
 
-      lowRiskPB() {
-
-        if (this.loseprobability < 0.33) {
-          return  (this.loseprobability * 100) + '' + '%';
-        } else {
-          return '33%';
-        }
-
-      }
-      mediumRiskPB() {
-
-        if ((this.loseprobability > 0.33) && (this.loseprobability < 0.66)) {
-          const adjustedProb = this.loseprobability - 0.33;
-          return  (adjustedProb * 100) + '' + '%';
-        } else if (this.loseprobability < 0.33) {
-          return '0%';
-        } else {
-          return '33%';
-        }
-      }
-
-      highRiskPB() {
-        if ((this.loseprobability > 0.66)) {
-          const adjustedProb = this.loseprobability - 0.66;
-          return  ((adjustedProb * 100) + 1) + '' + '%';
-        } else {
-          return '0%';
-        }
-      }
-
       oppTab() {
         this.breadCrumbVar = 1;
       }
       preBidTab() {
-        if ( 
-        this.mainForm.get('oppDetail').get('name').value &&
-        this.mainForm.get('oppDetail').get('description').value &&
-        this.mainForm.get('oppDetail').get('sharePointLink').value &&
-        this.mainForm.get('oppDetail').get('website').value &&
-        this.mainForm.get('oppDetail').get('estimatedValue').value
-        ) {
-
+       
         this.breadCrumbVar = 2;
 
-        } else {
-
-          return null;
-          
-        }
       }
   }
 

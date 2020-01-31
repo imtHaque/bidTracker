@@ -186,6 +186,87 @@
 
                 </div>
 
+                <div class="form-group">
+                  <label for="proposedBidTeam">
+                    Proposed Bid Team
+                  </label>
+      
+                  <input
+                  #bidTeamInput
+                  value=''
+                  onfocus="this.value=''"
+                  (keyup)="findBidTeamUser(bidTeamInput.value)"
+                  class="form-control transparent-input"
+                  placeholder="Invite your friends!"
+                  type="text"
+                  id="proposedBidTeam">
+      
+                      <ul class="btn" [hidden]="bidTeamArray.length == 0">
+                          <li
+                          *ngFor="let bidTeam of bidTeamArray; let i = index"
+                          class="btn btn-primary-outline float-right">
+                            {{bidTeam.name}}
+                            <a [ngStyle]="{
+                              'color': 'rgb(237, 83, 88)',
+                              'cursor': 'pointer'
+                            }"
+                            class="row-sm-4" (click)="bidTeamDelete(i)">X</a>
+                          </li>
+                        </ul>
+      
+      
+                    <hr>
+                  <ul [hidden]="!showBidTeamUserSearchList" class="btn btn-outline">
+                    <li
+                    class="list-group-item list-group-item-action list-group-item-secondary"
+                    *ngFor="let user of users"
+                    (click)="bidTeamUserSelection(user.name, user.id)">
+                      {{user.name}}
+                    </li>
+                  </ul>
+      
+                  </div>
+
+                  <div class="form-group">
+
+                    <label for="clientLead">Client Lead</label>
+                    <input
+                    [hidden]="hideClientLeadInput"
+                    #clientLead
+                    onfocus="this.value=''"
+                    value=''
+                    (keyup)="CLSearch(clientLead.value)"
+                    type="text"
+                    class="form-control transparent-input"
+                    id="clientLead">
+                    <div [hidden]="!hideClientLeadInput">
+                    <ul class="btn">
+                      <li class="btn btn-primary-outline">
+                        {{clientLeadHold?.Name}}
+                      </li>
+                      <div class="btn"></div>
+                      <span>
+                        <img src="../../assets/icons8-delete-64.png"
+                        (click)="onClientDelete()"
+                        class="deleteUserSelection flaot-right">
+                      </span>
+                    </ul>
+                    </div>
+                    <div [hidden]="!showClientList">
+                      <ul class="list-group justified"
+                            id="clientLead"
+                            class="btn btn-outline">
+                              <li
+                              (click)="selectedClient(user.id, user.name)"
+                              class="list-group-item list-group-item-action list-group-item-secondary"
+                              *ngFor="let user of clientArray">
+                              {{user.name}}
+                              </li>
+                          </ul>
+                    </div>
+            
+                </div>
+
 
                 <div class="form-group">
                     <label for="sharePointLink">Share Point Link</label>
@@ -196,18 +277,6 @@
                     id="sharePointLink"
                     placeholder="URL">
                 </div>
-
-
-                  <div class="form-group">
-                    <label for="website">Website</label>
-                    <input
-                    formControlName="website"
-                    type="text"
-                    class="form-control transparent-input"
-                    id="website"
-                    placeholder="URL">
-                  </div>
-
 
                     <div class="form-group">
                         <label for="probability">Probability</label>
@@ -290,45 +359,16 @@
           </div>
 
           <div class="form-group">
-            <label for="proposedBidTeam">
-              Proposed Bid Team
-            </label>
-
+            <label for="contractLength">Contract Length</label>
             <input
-            #bidTeamInput
-            value=''
-            onfocus="this.value=''"
-            (keyup)="findBidTeamUser(bidTeamInput.value)"
+            formControlName="contractLength"
+            placeholder="Months"
+            type="number"
             class="form-control transparent-input"
-            placeholder="Invite your friends!"
-            type="text"
-            id="proposedBidTeam">
+            id="contractLength">
+        </div>
 
-                <ul class="btn" [hidden]="bidTeamArray.length == 0">
-                    <li
-                    *ngFor="let bidTeam of bidTeamArray; let i = index"
-                    class="btn btn-primary-outline float-right">
-                      {{bidTeam.name}}
-                      <a [ngStyle]="{
-                        'color': 'rgb(237, 83, 88)',
-                        'cursor': 'pointer'
-                      }"
-                      class="row-sm-4" (click)="bidTeamDelete(i)">X</a>
-                    </li>
-                  </ul>
-
-
-              <hr>
-            <ul [hidden]="!showBidTeamUserSearchList" class="btn btn-outline">
-              <li
-              class="list-group-item list-group-item-action list-group-item-secondary"
-              *ngFor="let user of users"
-              (click)="bidTeamUserSelection(user.name, user.id)">
-                {{user.name}}
-              </li>
-            </ul>
-
-            </div>
+          
        </div>
     </ng-template>
   </div>

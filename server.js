@@ -79,6 +79,30 @@ app.get('/api/user/:userInput', cors(setCORS),
 
     });
 
+    app.options('/api/competitor', cors(setCORS));
+    app.get('/api/competitor/:userInput', cors(setCORS),
+    (req, res) => {
+    
+      const userInp = req.params.userInput;
+      const queryString = ('SELECT Id, Name FROM Competitor__c  WHERE name LIKE \'%' + userInp + '%\' LIMIT 3');
+    
+      org.query({
+            query: queryString},
+    
+             // tslint:disable-next-line: no-shadowed-variable
+             (err, resp) => {
+    
+            if (err) { throw err; }
+    
+            if (resp.records && resp.records.length) {
+    
+              res.send(resp.records);
+            }
+    
+          });
+    
+        });
+
 app.get('/api/getAccount/:userInput', cors(setCORS),
 (req, res) => {
 
@@ -115,16 +139,13 @@ app.options('/api/getSuccessProbability', cors(setCORS2));
 app.get('/api/getSuccessProbability/:id', cors(setCORS2),
 (req, res) => {
 
-  const salesLeadId = req.params.id;
-
   const querySuccessfulOpps = `
   SELECT
-   Id,
-   Sales_Lead__r.Id,
-   Stagename
+  Competitor__r.Id,
+  Competitor__r.Name,
+  WinPercentage__c
 
-  FROM Opportunity WHERE Sales_Lead__r.Id = \'` +
-  salesLeadId + '\'';
+  FROM CompetitorLink__c`;
 
   org.query({
     query: querySuccessfulOpps},
@@ -132,21 +153,9 @@ app.get('/api/getSuccessProbability/:id', cors(setCORS2),
       if (error) {console.log(error);
       } else {
 
-        let wonBids = 0;
-        let lostBids = 0;
-        response.records.forEach(element => {
-          if (element._fields.stagename === 'Closed Won') {
-            wonBids ++;
-          } else if (element._fields.stagename === 'Closed Lost') {
-            lostBids++;
-          }
-        });
-        const totalBids = wonBids + lostBids;
-        if (totalBids !== 0) {
-          const  winProb = lostBids / totalBids;
-          res.send({loseprobability: winProb});
-        } else {
-          res.send({loseprobability: 0});
+        if (response.records) {
+
+          res.send(response.records);
         }
       }
     });
@@ -161,6 +170,9 @@ app.get('/api/getOpp/:id', cors(setCORS2),
       SELECT
        Id,
        Account.Name,
+       Contract_Length__c,
+       Client_Leader__r.Name,
+       Client_Leader__r.Id,
        Name,
        Description,
        Share_Point_Link__c,
@@ -177,6 +189,10 @@ app.get('/api/getOpp/:id', cors(setCORS2),
 
       (
         SELECT Id, User__r.name, User__r.Id FROM Oppotunity_Teams__r
+      ),
+
+      (
+        SELECT Id, Competitor__r.name, Competitor__r.Id, WinPercentage__c, Reason_for_Winning__c FROM CompetitorLinks__r  
       )
 
       FROM Opportunity WHERE ID = \'` + userInp + '\'' ;
@@ -225,10 +241,11 @@ app.put('/api/getOpp/:id', cors(gettingOpp),
     opt.set('Name', req.body.oppDetail.name);
     opt.set('Description', req.body.oppDetail.description);
     opt.set('Sales_Lead__c', req.body.oppDetail.salesLead.Id);
+    opt.set('Client_Leader__c', req.body.oppDetail.clientLead.Id);
     opt.set('Share_Point_Link__c', req.body.oppDetail.sharePointLink);
-    opt.set('Website__c', req.body.oppDetail.website);
     opt.set('Probability', (req.body.oppDetail.probability));
     opt.set('Amount', req.body.oppDetail.estimatedValue);
+    opt.set('Contract_Length__c', req.body.oppDetail.contractLength);
     opt.set('CloseDate', req.body.oppDetail.bidDeadline);
     opt.set('WBS_Code__c', req.body.oppDetail.wbsCode);
     opt.set('Cost__c', req.body.oppDetail.costs);
@@ -289,6 +306,40 @@ app.delete('/api/delOpp/:id', cors(deleteBidTeam),
 });
 });
 
+app.options('/api/delComp', cors(deleteBidTeam));
+app.delete('/api/delComp/:id', cors(deleteBidTeam),
+(req, res) => {
+
+  const oppId = req.params.id;
+  const querystr = `SELECT Id FROM CompetitorLink__c WHERE Opportunity__c = \'` + oppId + '\'';
+
+  org.query({query: querystr},
+    (err, res1) => {
+ if (!err) {
+  let i = 0;
+  for (i = 0; i < res1.records.length; i++) {
+    const bteamId = res1.records[i]._fields.id;
+    const bteam = nforce.createSObject('CompetitorLink__c', {
+      id: bteamId
+    });
+    org.delete({sobject: bteam},
+      (err1) => {
+        if (err1) {
+
+        console.error('--> unable to retrieve');
+
+        console.error('--> ' + JSON.stringify(err1));
+      } else {
+        console.log('competitor deleted');
+
+        res.status(204).end();
+      }
+      });
+  }
+  }
+});
+});
+
 const addBidTeam = {
   origin: true,
   methods: ['POST'],
@@ -311,6 +362,29 @@ for (i = 0; i < bidTeamArray.length; i++) {
       if (err) { console.log(err);
       } else {
         console.log('bid team added!');
+        res.status(200).end();
+      }
+    });
+}
+});
+
+
+app.options('/api/addCompetitor', cors(addBidTeam));
+app.post('/api/addCompetitor/:id', cors(addBidTeam),
+(req, res) => {
+
+const bidTeamArray = req.body.oppDetail.competitors;
+let i = 0;
+for (i = 0; i < bidTeamArray.length; i++) {
+  console.log(req.body.oppDetail.competitors);
+  const bidTeam = nforce.createSObject('CompetitorLink__c');
+  bidTeam.set('Competitor__c', bidTeamArray[i].Competitor__r.Id);
+  bidTeam.set('Opportunity__c', req.params.id);
+  org.insert({sobject: bidTeam},
+    (err) => {
+      if (err) { console.log(err);
+      } else {
+        console.log('competitor added!');
         res.status(200).end();
       }
     });
@@ -492,6 +566,10 @@ app.get('/api/getOpp', cors(setCORS1),
       SELECT
        Id,
        Name,
+       Contract_Length__c,
+       Account.Name,
+       Client_Leader__r.Name,
+       Client_Leader__r.Id,
        Description,
        Share_Point_Link__c,
        Sales_Lead__r.Name,
@@ -507,6 +585,10 @@ app.get('/api/getOpp', cors(setCORS1),
 
       (
         SELECT User__r.name, User__r.Id FROM Oppotunity_Teams__r
+      ),
+
+      (
+        SELECT Id, Competitor__r.name, Competitor__r.Id, WinPercentage__c, Reason_for_Winning__c FROM CompetitorLinks__r  
       )
 
       FROM Opportunity ORDER BY CloseDate`;
@@ -640,10 +722,10 @@ app.post('/api/newEntry', cors(postCORS),
   const name = req.body.oppDetail.name;
   const description = req.body.oppDetail.description;
   const shplink = req.body.oppDetail.sharePointLink;
-  const website = req.body.oppDetail.website;
   const probability = req.body.oppDetail.probability;
   const estimatedValue = req.body.oppDetail.estimatedValue;
   const salesLead = req.body.oppDetail.salesLead;
+  const clientLead = req.body.oppDetail.clientLead;
 
   // checking for if bid dealine was selected
   // otherwise using generic date as its mandatory in SF
@@ -678,8 +760,9 @@ app.post('/api/newEntry', cors(postCORS),
   opt.set('Name', name);
   opt.set('Description', description);
   opt.set('Sales_Lead__c', salesLead);
+  opt.set('Client_Leader__c', clientLead.Id);
+  opt.set('Contract_Length__c', req.body.preBid.contractLength)
   opt.set('Share_Point_Link__c', shplink);
-  opt.set('Website__c', website);
   opt.set('Probability', (probability * 100));
   opt.set('Amount', estimatedValue);
   opt.set('StageName', 'Prospecting');
@@ -911,8 +994,8 @@ app.put('/api/taskStatusUpdate/:id', cors(updateTaskStatus),
 
 
         // tslint:disable-next-line: one-variable-per-declaration
-        let username      = 'imtih65@gmail.com',
-        password      = 'System808?',
+        let username      = '',
+        password      = '',
         securityToken = 'EZxMMMkUPmek8KYhWlyz2QeX',
         oauth;
         notificationArray = [];

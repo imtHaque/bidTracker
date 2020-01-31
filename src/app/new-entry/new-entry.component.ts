@@ -35,6 +35,13 @@ export class NewEntryComponent implements OnInit {
 
 addNewAccount = false;
 
+//client lead
+
+hideClientLeadInput: boolean;
+showClientList: boolean;
+clientArray = [];
+clientLeadHold;
+
   // form
    mainForm: FormGroup;
 
@@ -52,8 +59,8 @@ addNewAccount = false;
         name: ['', Validators.required],
         description: ['', Validators.required],
         salesLead: ['', Validators.required],
+        clientLead: ['', Validators.required],
         sharePointLink: ['', Validators.required],
-        website: ['', Validators.required],
         probability: [0.1, Validators.required],
         estimatedValue: ['', Validators.required],
 
@@ -71,7 +78,8 @@ addNewAccount = false;
           bidDeadline: ['', Validators.required],
           costs: ['', Validators.required],
           effortDays: ['', Validators.required],
-          bidTeam: [ [], Validators.required]
+          bidTeam: [ [], Validators.required],
+          contractLength: ['', Validators.required]
 
         })
       });
@@ -126,6 +134,42 @@ addNewAccount = false;
       return null;
 
     }
+  }
+
+  CLSearch(userInput?: string) {
+
+    if (userInput !== '') {
+
+      this.showClientList = true;
+
+      this.nodeService.getUser(userInput)
+    .subscribe(
+
+      (sfUsers: any) => {
+
+        this.clientArray = sfUsers;
+
+      });
+    } else {
+      this.showClientList = false;
+      return null;
+
+    }
+  }
+  onClientDelete() {
+
+      this.mainForm.get('oppDetail').get('clientLead').setValue({Id: ''});
+      this.hideClientLeadInput = false;
+    
+  }
+
+  selectedClient(Id: string, Name: string) {
+
+    this.mainForm.get('oppDetail').get('clientLead').setValue({Id, Name});
+    this.clientLeadHold = {Id, Name};
+    this.showClientList = false;
+    this.hideClientLeadInput = true;
+
   }
 
   selectedUser( id: string, name: string) {
